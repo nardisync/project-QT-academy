@@ -1,1 +1,1 @@
-# project-QT-accademy
+## QT Accademy Project

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "worker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +16,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QString getApproch();
+    QString getType();
+    int getDifficulty();
+
+private slots:
+    void on_pushButtonApply_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Worker *worker;
+
 };
 #endif // MAINWINDOW_H

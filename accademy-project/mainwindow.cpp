@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "Mainwindow.h"
+#include "ui_Mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
         worker()
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -14,41 +15,106 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QString MainWindow::getApproch()
+EnumsType::PossibleApproch MainWindow::getApproch()
 {
-    return ui->comboBoxApproch->currentText();
+
+    if(ui->comboBoxApproch->currentText() == "Sorting Algorithm")
+    {
+        return EnumsType::PossibleApproch::Sorting;
+    }
+    else if(ui->comboBoxApproch->currentText() == "Merging Algorithm")
+    {
+        return EnumsType::PossibleApproch::Merging;
+    }
+    else if(ui->comboBoxApproch->currentText() == "Problem with Algorithm")
+    {
+        return EnumsType::PossibleApproch::Problem;
+    }
+
+    return EnumsType::PossibleApproch::None;
 }
 
-QString MainWindow::getType()
+EnumsType::PossibleType MainWindow::getType()
 {
-    return ui->comboBoxType->currentText();
+    if(ui->comboBoxType->currentText() == "BubbleSort")
+    {
+        return EnumsType::PossibleType::BubbleSort;
+    }
+    else if(ui->comboBoxType->currentText() == "QuickSort")
+    {
+        return EnumsType::PossibleType::QuickSort;
+    }
+    else if(ui->comboBoxType->currentText() == "MergeSort")
+    {
+        return EnumsType::PossibleType::MergeSort;
+    }
+
+    else if(ui->comboBoxType->currentText() == "NormalMerging")
+    {
+        return EnumsType::PossibleType::NormalMerging;
+    }
+
+    else if(ui->comboBoxType->currentText() == "NormalProblem")
+    {
+        return EnumsType::PossibleType::NormalProblem;
+    }
+
+    return EnumsType::PossibleType::None;
 }
 
-int MainWindow::getDifficulty()
+EnumsType::Difficulty MainWindow::getDifficulty()
 {
     if(ui->radioButtonEasy->isChecked())
     {
-        return 1;
+        return EnumsType::Difficulty::Easy;
     }
     else if(ui->radioButtonMedium->isChecked())
     {
-        return 2;
+        return EnumsType::Difficulty::Medium;
     }
     else if(ui->radioButtonHard->isChecked())
     {
-        return 3;
+        return EnumsType::Difficulty::Hard;
     }
 
-    return 0;
+    return EnumsType::Difficulty::None;
 }
 
 
 void MainWindow::on_pushButtonApply_clicked()
 {
-    QString approch = this->getApproch();
-    QString type = this->getType();
-    int diff = this-> getDifficulty();
+    EnumsType::PossibleApproch approch = this->getApproch();
+    EnumsType::PossibleType type = this->getType();
+    EnumsType::Difficulty diff = this-> getDifficulty();
 
     this->worker->handleMessage(approch, type, diff);
+
+    // TO-DO: Vogliamo lasciarlo pubblico? o implementiamo
+    // un altro sistema?
+    // Cosi crashiamo, ma ci permette di fare l'append
+    //this->worker->sendSignalCalculate();
+}
+
+
+
+void MainWindow::on_pushButtonAppendThread_clicked()
+{
+    qDebug() << "on_pushButtonAppendThread_clicked -> START";
+
+    EnumsType::PossibleApproch approch = this->getApproch();
+    EnumsType::PossibleType type = this->getType();
+    EnumsType::Difficulty diff = this-> getDifficulty();
+
+    this->worker->handleMessage(approch, type, diff);
+
+    qDebug() << "on_pushButtonAppendThread_clicked -> STOP";
+}
+
+
+void MainWindow::on_pushButtonAppendThreadStart_clicked()
+{
+    qDebug() << "on_pushButtonAppendThreadStart_clicked -> START";
+    this->worker->sendSignalCalculate();
+    qDebug() << "on_pushButtonAppendThreadStart_clicked -> STOP";
 }
 

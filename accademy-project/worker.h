@@ -3,14 +3,23 @@
 
 #include <QObject>
 #include <QDebug>
+#include "EnumsType.h"
 
-class Worker
+class Worker : public QObject
 {
+    Q_OBJECT
 public:
     Worker();
     ~Worker();
 
-    void handleMessage(QString approch, QString type, int difficulty);
+    void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
+    void sendSignalCalculate();
+
+signals:
+    void launchTaskCalculate();
+
+
+
 };
 
 #endif // WORKER_H

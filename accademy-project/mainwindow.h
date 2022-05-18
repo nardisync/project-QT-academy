@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "worker.h"
+#include "Worker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,16 +16,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QString getApproch();
-    QString getType();
-    int getDifficulty();
+    EnumsType::PossibleApproch getApproch();
+    EnumsType::PossibleType getType();
+    EnumsType::Difficulty getDifficulty();
 
 private slots:
     void on_pushButtonApply_clicked();
+    void on_pushButtonAppendThread_clicked();
+    void on_pushButtonAppendThreadStart_clicked();
 
 private:
     Ui::MainWindow *ui;
     Worker *worker;
+
+    void sendSignalCalculate();
 
 };
 #endif // MAINWINDOW_H

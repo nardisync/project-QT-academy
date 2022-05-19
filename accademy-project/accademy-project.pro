@@ -5,16 +5,16 @@ CONFIG  += c++20
 
 SOURCES += \
     Main.cpp \
-    Mainwindow.cpp \
+    MainWindow.cpp \
     Worker.cpp
 
 HEADERS += \
     EnumsType.h \
-    Mainwindow.h \
+    MainWindow.h \
     Worker.h
 
 FORMS   += \
-    Mainwindow.ui
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

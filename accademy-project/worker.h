@@ -1,15 +1,17 @@
 #ifndef WORKER_H
 #define WORKER_H
 
+#include <QThread>
 #include <QObject>
 #include <QDebug>
-#include "EnumsType.h"
+#include <QProgressBar>
+#include "MainWindow.h"
 
 class Worker : public QObject
 {
     Q_OBJECT
 public:
-    Worker();
+    Worker(Ui::MainWindow* ui);
     ~Worker();
 
     void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
@@ -18,6 +20,13 @@ public:
 signals:
     void launchTaskCalculate();
 
+public slots:
+    void slotUpdateProgressBar(int threadCallerID, int perc);
+
+private:
+    Ui::MainWindow* ui{nullptr};
+    int progressThreadID = 0;
+    QMap<int, QString> *progressBarThreadMap;
 
 
 };

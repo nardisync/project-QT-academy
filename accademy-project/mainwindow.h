@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Worker.h"
+#include "EnumsType.h"
+class Worker;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

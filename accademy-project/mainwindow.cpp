@@ -1,13 +1,13 @@
-#include "Mainwindow.h"
-#include "ui_Mainwindow.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include "Worker.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    ,   ui(new Ui::MainWindow),
-        worker()
+    ,   ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    worker = new Worker(ui);
 }
 
 MainWindow::~MainWindow()
@@ -83,9 +83,14 @@ EnumsType::Difficulty MainWindow::getDifficulty()
 
 void MainWindow::on_pushButtonApply_clicked()
 {
+    qDebug() << "MainWindow::on_pushButtonApply_clicked -> START";
     EnumsType::PossibleApproch approch = this->getApproch();
     EnumsType::PossibleType type = this->getType();
     EnumsType::Difficulty diff = this-> getDifficulty();
+
+    qDebug() << "MainWindow::on_pushButtonApply_clickede -> Approch: " << (int)approch <<
+                "\nMainWindow::on_pushButtonApply_clicked -> Type: " << (int)type <<
+                "\nMainWindow::on_pushButtonApply_clicked -> Difficulty: " << (int)diff <<  "\n";
 
     this->worker->handleMessage(approch, type, diff);
 
@@ -93,13 +98,14 @@ void MainWindow::on_pushButtonApply_clicked()
     // un altro sistema?
     // Cosi crashiamo, ma ci permette di fare l'append
     //this->worker->sendSignalCalculate();
+    qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP";
 }
 
 
 
 void MainWindow::on_pushButtonAppendThread_clicked()
 {
-    qDebug() << "on_pushButtonAppendThread_clicked -> START";
+    qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> START";
 
     EnumsType::PossibleApproch approch = this->getApproch();
     EnumsType::PossibleType type = this->getType();
@@ -107,14 +113,14 @@ void MainWindow::on_pushButtonAppendThread_clicked()
 
     this->worker->handleMessage(approch, type, diff);
 
-    qDebug() << "on_pushButtonAppendThread_clicked -> STOP";
+    qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> STOP";
 }
 
 
 void MainWindow::on_pushButtonAppendThreadStart_clicked()
 {
-    qDebug() << "on_pushButtonAppendThreadStart_clicked -> START";
+    qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> START";
     this->worker->sendSignalCalculate();
-    qDebug() << "on_pushButtonAppendThreadStart_clicked -> STOP";
+    qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP";
 }
 

@@ -149,9 +149,11 @@ QLabel, QRadioButton{
         <widget class="QFrame" name="inputFrame">
          <property name="styleSheet">
           <string notr="true">QFrame{
-	
 	background-color: rgb(70, 70, 70);
-}</string>
+}
+
+Qlabel{
+}&gt;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -202,7 +204,7 @@ QLabel, QRadioButton{
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer">
+                 <spacer name="horizontalSpacerApproch">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -272,7 +274,7 @@ QLabel, QRadioButton{
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_2">
+                 <spacer name="horizontalSpacerType">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -349,8 +351,8 @@ QLabel, QRadioButton{
               <item>
                <widget class="QPushButton" name="pushButtonApply">
                 <property name="styleSheet">
-                 <string notr="true">color:rgb(255, 255, 127);
-background-color:rgb(0, 0, 0);</string>
+                 <string notr="true">color:rgb(255, 255, 255);
+background-color:rgb(95,  95, 95);</string>
                 </property>
                 <property name="text">
                  <string>Start the Thread</string>

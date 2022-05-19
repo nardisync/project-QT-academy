@@ -1,8 +1,9 @@
 #include "Worker.h"
+#include "ui_mainwindow.h"
 
-Worker::Worker()
+Worker::Worker(Ui::MainWindow* ui)
 {
-
+    this->ui = ui;
 }
 
 Worker::~Worker()
@@ -12,57 +13,98 @@ Worker::~Worker()
 
 void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
 {
-    qDebug() << "handleMessage -> START\n" ;
+    qDebug() << "Worker::handleMessage -> START\n" ;
 
-    qDebug() << "Approch: " << (int)approch <<
-                "\nType: " << (int)type <<
-                "\nDifficulty: " << (int)difficulty <<  "\n";
+    qDebug() << "Worker::handleMessage -> Approch: " << (int)approch <<
+                "\nWorker::handleMessage -> Type: " << (int)type <<
+                "\nWorker::handleMessage -> Difficulty: " << (int)difficulty <<  "\n";
 
+    //QThread * workerThread = new QThread();
+    //GenericTask * task{nullptr};
 
     if(approch == EnumsType::PossibleApproch::Sorting)
     {
-        qDebug() << "Inside Sorting Approch" ;
+        qDebug() << "Worker::handleMessage -> Inside Sorting Approch" ;
 
         if(type == EnumsType::PossibleType::BubbleSort)
         {
-            qDebug() << "Inside BubbleSort Type" ;
+            qDebug() << "Worker::handleMessage -> Inside BubbleSort Type" ;
+            //task = new BubbleSortTask();
+
         }
         else if(type == EnumsType::PossibleType::MergeSort)
         {
-            qDebug() << "Inside MergeSort Type" ;
+            qDebug() << "Worker::handleMessage -> Inside MergeSort Type" ;
+            //task = new MergeSortTask();
         }
         else if(type == EnumsType::PossibleType::QuickSort)
         {
-            qDebug() << "Inside QuickSort Type" ;
+            qDebug() << "Worker::handleMessage -> Inside QuickSort Type" ;
+            //task = new QuickSortTask();
         }
     }
 
     else if(approch == EnumsType::PossibleApproch::Merging)
     {
-        qDebug() << "Inside Merging Approch" ;
+        qDebug() << "Worker::handleMessage -> Inside Merging Approch" ;
 
         if(type == EnumsType::PossibleType::NormalMerging)
         {
-            qDebug() << "Inside NormalMerging Type" ;
+            qDebug() << "Worker::handleMessage -> Inside NormalMerging Type" ;
+            //task = new NormalMergingTask();
         }
     }
 
     else if(approch == EnumsType::PossibleApproch::Problem)
     {
-        qDebug() << "Inside Problem Approch" ;
+        qDebug() << "Worker::handleMessage -> Inside Problem Approch" ;
         if(type == EnumsType::PossibleType::NormalProblem)
         {
-            qDebug() << "Inside NormalProblem Type" ;
+            qDebug() << "Worker::handleMessage -> Inside NormalProblem Type" ;
+            //task = new NormalProblemTask();
         }
     }
 
+    /*
+    if(task != nullptr)
+    {
+        task->setID(progressThreadID);
+        task->moveToThread(workerThread);
+        QObject::connect(this, launchTaskCalculate, task, &Task::calculate);
+        QObject::connect(task, &Task::updateProgressBar, this, slotUpdateProgressBar);
 
-    qDebug() << "handleMessage -> STOP";
+
+        progressBarThreadMap->insert(progressThreadID, progressBarUniqueName);
+
+        workerThread->start();
+    }
+
+    */
+
+    QProgressBar *progressBar = new QProgressBar();
+    QString progressBarUniqueName = "ProgressBar_ID_" + QString::number(progressThreadID);
+    progressBar->setObjectName(progressBarUniqueName);
+    progressThreadID += 1;
+    progressBar->setValue(55);
+    qDebug() << "Worker::handleMessage -> Added new progressBar: " << progressBarUniqueName;
+    this->ui->progressBarFrame->layout()->addWidget(progressBar);
+
+    qDebug() << "Worker::handleMessage -> STOP";
 }
 
 void Worker::sendSignalCalculate()
 {
+    qDebug() << "Worker::sendSignalCalculate -> START";
     emit launchTaskCalculate();
+    qDebug() << "Worker::sendSignalCalculate -> STOP";
+}
+
+void Worker::slotUpdateProgressBar(int threadCallerID, int perc)
+{
+    qDebug() << "Worker::slotUpdateProgressBar -> START";
+    QMap<int, QString>::iterator it = progressBarThreadMap->find(threadCallerID);
+    (this->ui->progressBarFrameListView->findChild<QProgressBar *>(it.value()))->setValue(perc);
+    qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
 
 

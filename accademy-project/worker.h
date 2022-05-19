@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QProgressBar>
-#include "MainWindow.h"
+#include "mainwindow.h"
 
 class Worker : public QObject
 {
@@ -21,12 +21,12 @@ signals:
     void launchTaskCalculate();
 
 public slots:
-    void slotUpdateProgressBar(int threadCallerID, int perc);
+    void slotUpdateProgressBar(int perc);
 
 private:
     Ui::MainWindow* ui{nullptr};
-    int progressThreadID = 0;
-    QMap<int, QString> *progressBarThreadMap;
+    int progressThreadID;
+    QMap<int, QString> progressBarThreadMap;
 
 
 };

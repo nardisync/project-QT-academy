@@ -1,9 +1,12 @@
 #include "Worker.h"
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
+#include "generictask.h"
+#include "sortingtask.h"
 
 Worker::Worker(Ui::MainWindow* ui)
 {
     this->ui = ui;
+    progressThreadID = 0;
 }
 
 Worker::~Worker()
@@ -13,14 +16,14 @@ Worker::~Worker()
 
 void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
 {
-    qDebug() << "Worker::handleMessage -> START\n" ;
+    qDebug() << "Worker::handleMessage -> START\n";
 
-    qDebug() << "Worker::handleMessage -> Approch: " << (int)approch <<
-                "\nWorker::handleMessage -> Type: " << (int)type <<
-                "\nWorker::handleMessage -> Difficulty: " << (int)difficulty <<  "\n";
+    qDebug() << "Worker::handleMessage -> Approch: "        << (int)approch     <<
+                "\nWorker::handleMessage -> Type: "         << (int)type        <<
+                "\nWorker::handleMessage -> Difficulty: "   << (int)difficulty  <<  "\n";
 
-    //QThread * workerThread = new QThread();
-    //GenericTask * task{nullptr};
+    QThread * workerThread = new QThread();
+    GenericTask * task{nullptr};
 
     if(approch == EnumsType::PossibleApproch::Sorting)
     {
@@ -30,7 +33,6 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
         {
             qDebug() << "Worker::handleMessage -> Inside BubbleSort Type" ;
             //task = new BubbleSortTask();
-
         }
         else if(type == EnumsType::PossibleType::MergeSort)
         {
@@ -65,46 +67,43 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
         }
     }
 
-    /*
     if(task != nullptr)
     {
         task->setID(progressThreadID);
         task->moveToThread(workerThread);
-        QObject::connect(this, launchTaskCalculate, task, &Task::calculate);
-        QObject::connect(task, &Task::updateProgressBar, this, slotUpdateProgressBar);
+        QObject::connect(this, &Worker::launchTaskCalculate, task, &GenericTask::calculate);
+        QObject::connect(task, &GenericTask::updateProgressBar, this, &Worker::slotUpdateProgressBar);
 
+        QProgressBar* progressBar       = new QProgressBar();
+        QString progressBarUniqueName   = "ProgressBar_ID_" + QString::number(progressThreadID);
 
-        progressBarThreadMap->insert(progressThreadID, progressBarUniqueName);
+        progressBarThreadMap.insert(progressThreadID, progressBarUniqueName);
+
+        progressBar->setObjectName(progressBarUniqueName);
+        progressThreadID++;
+
+        qDebug() << "Worker::handleMessage -> Added new progressBar: " << progressBarUniqueName;
+        progressBar->setValue(0);
+        this->ui->progressBarFrame->layout()->addWidget(progressBar);
 
         workerThread->start();
     }
-
-    */
-
-    QProgressBar *progressBar = new QProgressBar();
-    QString progressBarUniqueName = "ProgressBar_ID_" + QString::number(progressThreadID);
-    progressBar->setObjectName(progressBarUniqueName);
-    progressThreadID += 1;
-    progressBar->setValue(55);
-    qDebug() << "Worker::handleMessage -> Added new progressBar: " << progressBarUniqueName;
-    this->ui->progressBarFrame->layout()->addWidget(progressBar);
-
-    qDebug() << "Worker::handleMessage -> STOP";
 }
 
 void Worker::sendSignalCalculate()
 {
     qDebug() << "Worker::sendSignalCalculate -> START";
     emit launchTaskCalculate();
-    qDebug() << "Worker::sendSignalCalculate -> STOP";
 }
 
-void Worker::slotUpdateProgressBar(int threadCallerID, int perc)
+void Worker::slotUpdateProgressBar(int perc)
 {
     qDebug() << "Worker::slotUpdateProgressBar -> START";
-    QMap<int, QString>::iterator it = progressBarThreadMap->find(threadCallerID);
-    (this->ui->progressBarFrameListView->findChild<QProgressBar *>(it.value()))->setValue(perc);
-    qDebug() << "Worker::slotUpdateProgressBar -> STOP";
+
+    GenericTask * task = dynamic_cast<GenericTask*>(sender());
+    QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
+    QProgressBar* temp = ui->progressBarFrame->findChild<QProgressBar*>(it.value());
+    temp->setValue(perc);
 }
 
 

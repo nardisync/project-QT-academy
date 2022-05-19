@@ -6,12 +6,15 @@ CONFIG  += c++20
 SOURCES += \
     Main.cpp \
     MainWindow.cpp \
-    Worker.cpp
+    Worker.cpp \
+    sortingtask.cpp
 
 HEADERS += \
     EnumsType.h \
     MainWindow.h \
-    Worker.h
+    Worker.h \
+    GenericTask.h \
+    sortingtask.h
 
 FORMS   += \
     MainWindow.ui

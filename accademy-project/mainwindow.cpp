@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "mainwindow.h"
 #include "ui_MainWindow.h"
 #include "Worker.h"
 
@@ -98,7 +98,6 @@ void MainWindow::on_pushButtonApply_clicked()
     // un altro sistema?
     // Cosi crashiamo, ma ci permette di fare l'append
     //this->worker->sendSignalCalculate();
-    qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP";
 }
 
 
@@ -112,8 +111,6 @@ void MainWindow::on_pushButtonAppendThread_clicked()
     EnumsType::Difficulty diff = this-> getDifficulty();
 
     this->worker->handleMessage(approch, type, diff);
-
-    qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> STOP";
 }
 
 
@@ -121,6 +118,5 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
 {
     qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> START";
     this->worker->sendSignalCalculate();
-    qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP";
 }
 

@@ -1,0 +1,26 @@
+#ifndef CONSTSTRINGDEFINITION_H
+#define CONSTSTRINGDEFINITION_H
+#include <QString>
+
+/* Gestione stringhe della Combo Box dedicata al tipo di approccio*/
+const QString COMBO_BOX_APPROCH_SORTING = "Sorting Algorithm";
+const QString COMBO_BOX_APPROCH_SORTING_INFO = "Qui sto descriveno in che modo mi approccio al problema con il sorting";
+const QString COMBO_BOX_APPROCH_MERGING= "Merging Algorithm";
+const QString COMBO_BOX_APPROCH_MERGING_INFO = "Qui sto descriveno in che modo mi approccio al problema con il merging";
+const QString COMBO_BOX_APPROCH_PROBLEM = "Problem with Algorithm";
+const QString COMBO_BOX_APPROCH_PROBLEM_INFO = "Qui sto descriveno in che modo mi approccio ai vari problemi e con che algoritmi";
+
+
+/* Gestione delle stringhe della Combo Box dedicata allo stile di approccio*/
+const QString COMBO_BOX_APPROCH_TYPE_BUBBLESORT = "BubbleSort Algorithm";
+const QString COMBO_BOX_APPROCH_TYPE_BUBBLESORT_INFO = "Qui sto descriveno in che modo mi approccio al problema con il bubble";
+const QString COMBO_BOX_APPROCH_TYPE_MERGESORT = "MergeSort Algorithm";
+const QString COMBO_BOX_APPROCH_TYPE_MERGESORT_INFO = "Qui sto descriveno in che modo mi approccio al problema con il merge";
+const QString COMBO_BOX_APPROCH_TYPE_QUICKSORT = "QuickSort Algorithm";
+const QString COMBO_BOX_APPROCH_TYPE_QUICKSORT_INFO = "Qui sto descriveno in che modo mi approccio ai vari problemi con il quicksort";
+const QString COMBO_BOX_APPROCH_TYPE_NORMALMERGE = "NormalMerging Algorithm";
+const QString COMBO_BOX_APPROCH_TYPE_NORMALMERGE_INFO = "Qui sto descriveno in che modo mi approccio al problema con il NORMALMERGING";
+const QString COMBO_BOX_APPROCH_TYPE_NORMALPROBLEM = "NormalProblem Algorithm";
+const QString COMBO_BOX_APPROCH_TYPE_NORMALPROBLEM_INFO = "Qui sto descriveno in che modo mi approccio ai vari problemi con il NORMALPROBLEM";
+
+#endif // CONSTSTRINGDEFINITION_H

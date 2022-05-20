@@ -3,10 +3,11 @@
 #include "generictask.h"
 #include "sorting.h"
 
+
 Worker::Worker(Ui::MainWindow* ui)
 {
     this->ui = ui;
-    progressThreadID = 0;
+    progressThreadID = 1;
 }
 
 Worker::~Worker()
@@ -16,7 +17,7 @@ Worker::~Worker()
 
 void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
 {
-    qDebug() << "Worker::handleMessage -> START\n";
+    qDebug() << "Worker::handleMessage -> START";
 
     qDebug() << "Worker::handleMessage -> Approch: "        << (int)approch     <<
                 "\nWorker::handleMessage -> Type: "         << (int)type        <<
@@ -28,31 +29,10 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
     if(approch == EnumsType::PossibleApproch::Sorting)
     {
         qDebug() << "Worker::handleMessage -> Inside Sorting Approch" ;
-
-        if(type == EnumsType::PossibleType::BubbleSort)
-        {
-            qDebug() << "Worker::handleMessage -> Inside BubbleSort Type" ;
-            task = new sorting();
-            task->setType(type);
-            task->setDif(difficulty);
-            task->generateRandomArray();
-        }
-        else if(type == EnumsType::PossibleType::MergeSort)
-        {
-            qDebug() << "Worker::handleMessage -> Inside MergeSort Type" ;
-            task = new sorting();
-            task->setType(type);
-            task->setDif(difficulty);
-            task->generateRandomArray();
-        }
-        else if(type == EnumsType::PossibleType::QuickSort)
-        {
-            qDebug() << "Worker::handleMessage -> Inside QuickSort Type" ;
-            task = new sorting();
-            task->setType(type);
-            task->setDif(difficulty);
-            task->generateRandomArray();
-        }
+        task = new sorting();
+        task->setType(type);
+        task->setDif(difficulty);
+        task->generateRandomArray();
     }
 
     else if(approch == EnumsType::PossibleApproch::Merging)
@@ -76,6 +56,7 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
         }
     }
 
+
     if(task != nullptr)
     {
         task->setID(progressThreadID);
@@ -97,23 +78,23 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
 
         workerThread->start();
     }
+
+    qDebug() << "Worker::handleMessage -> STOP";
 }
 
 void Worker::sendSignalCalculate()
 {
     qDebug() << "Worker::sendSignalCalculate -> START";
     emit launchTaskCalculate();
+    qDebug() << "Worker::sendSignalCalculate -> STOP";
 }
 
 void Worker::slotUpdateProgressBar(int perc)
 {
     qDebug() << "Worker::slotUpdateProgressBar -> START";
-
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
     QProgressBar* temp = ui->progressBarFrame->findChild<QProgressBar*>(it.value());
     temp->setValue(perc);
+    qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
-
-
-// connect(this, sendSignalCalculate, OGGETTOCREATOTRAMITEMARCO, SLOTCALCULATEIMPLEMENTATOMARCO)

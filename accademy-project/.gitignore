@@ -1,0 +1,7 @@
+
+# Ignoriamo ogni tipo di file che può essere
+# creato con una shadowbuild
+Makefile*
+debug
+release
+.qmake.stash

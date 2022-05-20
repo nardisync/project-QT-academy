@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
 #include "EnumsType.h"
+
 class Worker;
 
 QT_BEGIN_NAMESPACE
@@ -26,11 +28,22 @@ private slots:
     void on_pushButtonAppendThread_clicked();
     void on_pushButtonAppendThreadStart_clicked();
 
+    void on_comboBoxApproch_currentTextChanged(const QString &comboApprochCurrentText);
+    void on_comboBoxType_currentTextChanged(const QString &type);
+
 private:
     Ui::MainWindow *ui;
     Worker *worker;
 
     void sendSignalCalculate();
+
+    /* Gestione delle Combo Box d'Input */
+    void updateTypeComboBox(EnumsType::PossibleApproch approch);
+
+    /* Gestione delle Label info */
+    void updateApprochInfo(EnumsType::PossibleApproch approch);
+    void updateTypeInfo(EnumsType::PossibleType type);
+    void updateDifficultyInfo(EnumsType::Difficulty difficulty);
 
 };
 #endif // MAINWINDOW_H

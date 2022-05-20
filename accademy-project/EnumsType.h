@@ -1,7 +1,7 @@
 #ifndef ENUMSTYPE_H
 #define ENUMSTYPE_H
 
-#endif // ENUMSTYPE_H
+
 
 class EnumsType
 {
@@ -55,3 +55,4 @@ public:
     };
 
 };
+#endif // ENUMSTYPE_H

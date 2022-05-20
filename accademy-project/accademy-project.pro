@@ -7,14 +7,15 @@ SOURCES += \
     Main.cpp \
     MainWindow.cpp \
     Worker.cpp \
-    sortingtask.cpp
+    sorting.cpp
 
 HEADERS += \
+    ConstStringDefinition.h \
     EnumsType.h \
     MainWindow.h \
     Worker.h \
     GenericTask.h \
-    sortingtask.h
+    sorting.h
 
 FORMS   += \
     MainWindow.ui

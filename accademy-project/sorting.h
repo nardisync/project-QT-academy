@@ -1,7 +1,7 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <stdlib.h>
 #include "generictask.h"
 #include <iostream>

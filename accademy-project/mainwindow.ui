@@ -12,93 +12,9 @@
   </property>
   <property name="palette">
    <palette>
-    <active>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </active>
-    <inactive>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </inactive>
-    <disabled>
-     <colorrole role="Button">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Base">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </disabled>
+    <active/>
+    <inactive/>
+    <disabled/>
    </palette>
   </property>
   <property name="windowTitle">
@@ -108,22 +24,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow{
-	background:rgb(0, 0, 0);		
-		
-	font: 11pt &quot;Times New Roman&quot;;
-	font-color:rgb(255, 255, 255);
-
-}
-QMenuBar{
-	background:rgb(51, 51, 51);
-}
-QFrame{
-	background:rgb(51, 51, 51);
-}
-QLabel, QRadioButton{
-	color: rgb(255, 255, 255);
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -148,12 +49,7 @@ QLabel, QRadioButton{
        <item>
         <widget class="QFrame" name="inputFrame">
          <property name="styleSheet">
-          <string notr="true">QFrame{
-	background-color: rgb(70, 70, 70);
-}
-
-Qlabel{
-}&gt;</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -173,6 +69,12 @@ Qlabel{
                <layout class="QHBoxLayout" name="horizontalLayoutApproch">
                 <item>
                  <widget class="QLabel" name="labelApproch">
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>Approch :</string>
                   </property>
@@ -233,6 +135,12 @@ Qlabel{
                <layout class="QHBoxLayout" name="horizontalLayoutType">
                 <item>
                  <widget class="QLabel" name="labelType">
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>Type :</string>
                   </property>
@@ -302,24 +210,36 @@ Qlabel{
               <item>
                <layout class="QHBoxLayout" name="horizontalLayoutRadio">
                 <item>
-                 <widget class="QRadioButton" name="radioButtonEasy">
-                  <property name="text">
-                   <string>Easy</string>
+                 <widget class="QFrame" name="frameRadioDifficult">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="radioButtonMedium">
-                  <property name="text">
-                   <string>Medium</string>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="radioButtonHard">
-                  <property name="text">
-                   <string>Hard</string>
-                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout">
+                   <item>
+                    <widget class="QRadioButton" name="radioButtonEasy">
+                     <property name="text">
+                      <string>Easy</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="radioButtonMedium">
+                     <property name="text">
+                      <string>Medium</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="radioButtonHard">
+                     <property name="text">
+                      <string>Hard</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                 <item>
@@ -351,8 +271,7 @@ Qlabel{
               <item>
                <widget class="QPushButton" name="pushButtonApply">
                 <property name="styleSheet">
-                 <string notr="true">color:rgb(255, 255, 255);
-background-color:rgb(95,  95, 95);</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Start the Thread</string>
@@ -399,9 +318,7 @@ background-color:rgb(95,  95, 95);</string>
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel{
-	background-color: rgb(70, 70, 70);
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -435,15 +352,7 @@ background-color:rgb(95,  95, 95);</string>
     <item>
      <widget class="QFrame" name="commandOutputFrame">
       <property name="styleSheet">
-       <string notr="true">QTableView{
-	height:25%;
-	width:100%;
-}
-QFrame{
-	height:75%;
-	width:100;
-}
-</string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="rightVerticalLayout">
        <item>

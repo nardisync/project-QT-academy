@@ -61,8 +61,11 @@ void sorting::quickSort(int first, int last)
           temp=this->array[pivot];
           this->array[pivot]=this->array[j];
           this->array[j]=temp;
-          this->progress++;
-          emit updateProgressBar(this->progress);
+          this->progress+=5;
+          int signal = static_cast<int>((this->progress*100)/(this->size)+1);
+
+          if (signal%5)
+              emit updateProgressBar(signal);
           quickSort(first,j-1);
           quickSort(j+1,last);
        }
@@ -71,9 +74,11 @@ void sorting::quickSort(int first, int last)
 
 void sorting::mergeSort(int p, int r) {
   int q;
-  this->progress++;
-  int signal = static_cast<int>((this->progress*100)/(this->size));
-  emit updateProgressBar(signal);
+  this->progress+=5;
+  int signal = static_cast<int>((this->progress*100)/(this->size)+1);
+
+  if (signal%5)
+      emit updateProgressBar(signal);
 
   if (!jump)
   {
@@ -96,9 +101,11 @@ void sorting::bubbleSort()
             if (this->array[j] > this->array[j + 1])
                 std::swap(this->array[j], this->array[j + 1]);
 
-        this->progress++;
+        this->progress+=5;
         int signal = static_cast<int>((this->progress*100)/(this->size)+1);
-        emit updateProgressBar(signal);
+
+        if (signal%5)
+            emit updateProgressBar(signal);
 
     }
 }

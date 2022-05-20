@@ -203,6 +203,7 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         radioButtonEasy = new QRadioButton(frameRadioDifficult);
         radioButtonEasy->setObjectName(QString::fromUtf8("radioButtonEasy"));
+        radioButtonEasy->setChecked(true);
 
         horizontalLayout->addWidget(radioButtonEasy);
 

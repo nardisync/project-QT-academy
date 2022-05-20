@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.2.4
+** Created by: Qt User Interface Compiler version 6.2.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -56,6 +56,8 @@ public:
     QLabel *labelTypeInfo;
     QVBoxLayout *verticalLayoutRadio;
     QHBoxLayout *horizontalLayoutRadio;
+    QFrame *frameRadioDifficult;
+    QHBoxLayout *horizontalLayout;
     QRadioButton *radioButtonEasy;
     QRadioButton *radioButtonMedium;
     QRadioButton *radioButtonHard;
@@ -83,35 +85,9 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1600, 800);
         QPalette palette;
-        QBrush brush(QColor(0, 0, 0, 255));
-        brush.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Button, brush);
-        palette.setBrush(QPalette::Active, QPalette::Base, brush);
-        palette.setBrush(QPalette::Active, QPalette::Window, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Button, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Window, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Button, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Base, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
         MainWindow->setPalette(palette);
         MainWindow->setAutoFillBackground(false);
-        MainWindow->setStyleSheet(QString::fromUtf8("QMainWindow{\n"
-"	background:rgb(0, 0, 0);		\n"
-"		\n"
-"	font: 11pt \"Times New Roman\";\n"
-"	font-color:rgb(255, 255, 255);\n"
-"\n"
-"}\n"
-"QMenuBar{\n"
-"	background:rgb(51, 51, 51);\n"
-"}\n"
-"QFrame{\n"
-"	background:rgb(51, 51, 51);\n"
-"}\n"
-"QLabel, QRadioButton{\n"
-"	color: rgb(255, 255, 255);\n"
-"}"));
+        MainWindow->setStyleSheet(QString::fromUtf8(""));
         actionCreators = new QAction(MainWindow);
         actionCreators->setObjectName(QString::fromUtf8("actionCreators"));
         centralwidget = new QWidget(MainWindow);
@@ -132,12 +108,7 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         inputFrame = new QFrame(commandInputFrame);
         inputFrame->setObjectName(QString::fromUtf8("inputFrame"));
-        inputFrame->setStyleSheet(QString::fromUtf8("QFrame{\n"
-"	background-color: rgb(70, 70, 70);\n"
-"}\n"
-"\n"
-"Qlabel{\n"
-"}>"));
+        inputFrame->setStyleSheet(QString::fromUtf8(""));
         inputFrame->setFrameShape(QFrame::StyledPanel);
         inputFrame->setFrameShadow(QFrame::Raised);
         verticalLayout = new QVBoxLayout(inputFrame);
@@ -151,6 +122,7 @@ public:
         horizontalLayoutApproch->setObjectName(QString::fromUtf8("horizontalLayoutApproch"));
         labelApproch = new QLabel(inputFrame);
         labelApproch->setObjectName(QString::fromUtf8("labelApproch"));
+        labelApproch->setMinimumSize(QSize(60, 0));
 
         horizontalLayoutApproch->addWidget(labelApproch);
 
@@ -188,6 +160,7 @@ public:
         horizontalLayoutType->setObjectName(QString::fromUtf8("horizontalLayoutType"));
         labelType = new QLabel(inputFrame);
         labelType->setObjectName(QString::fromUtf8("labelType"));
+        labelType->setMinimumSize(QSize(60, 0));
 
         horizontalLayoutType->addWidget(labelType);
 
@@ -222,20 +195,29 @@ public:
         verticalLayoutRadio->setObjectName(QString::fromUtf8("verticalLayoutRadio"));
         horizontalLayoutRadio = new QHBoxLayout();
         horizontalLayoutRadio->setObjectName(QString::fromUtf8("horizontalLayoutRadio"));
-        radioButtonEasy = new QRadioButton(inputFrame);
+        frameRadioDifficult = new QFrame(inputFrame);
+        frameRadioDifficult->setObjectName(QString::fromUtf8("frameRadioDifficult"));
+        frameRadioDifficult->setFrameShape(QFrame::StyledPanel);
+        frameRadioDifficult->setFrameShadow(QFrame::Raised);
+        horizontalLayout = new QHBoxLayout(frameRadioDifficult);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        radioButtonEasy = new QRadioButton(frameRadioDifficult);
         radioButtonEasy->setObjectName(QString::fromUtf8("radioButtonEasy"));
 
-        horizontalLayoutRadio->addWidget(radioButtonEasy);
+        horizontalLayout->addWidget(radioButtonEasy);
 
-        radioButtonMedium = new QRadioButton(inputFrame);
+        radioButtonMedium = new QRadioButton(frameRadioDifficult);
         radioButtonMedium->setObjectName(QString::fromUtf8("radioButtonMedium"));
 
-        horizontalLayoutRadio->addWidget(radioButtonMedium);
+        horizontalLayout->addWidget(radioButtonMedium);
 
-        radioButtonHard = new QRadioButton(inputFrame);
+        radioButtonHard = new QRadioButton(frameRadioDifficult);
         radioButtonHard->setObjectName(QString::fromUtf8("radioButtonHard"));
 
-        horizontalLayoutRadio->addWidget(radioButtonHard);
+        horizontalLayout->addWidget(radioButtonHard);
+
+
+        horizontalLayoutRadio->addWidget(frameRadioDifficult);
 
         horizontalSpacerRadio = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -256,8 +238,7 @@ public:
         horizontalLayoutButton->setObjectName(QString::fromUtf8("horizontalLayoutButton"));
         pushButtonApply = new QPushButton(inputFrame);
         pushButtonApply->setObjectName(QString::fromUtf8("pushButtonApply"));
-        pushButtonApply->setStyleSheet(QString::fromUtf8("color:rgb(255, 255, 255);\n"
-"background-color:rgb(95,  95, 95);"));
+        pushButtonApply->setStyleSheet(QString::fromUtf8(""));
 
         horizontalLayoutButton->addWidget(pushButtonApply);
 
@@ -287,9 +268,7 @@ public:
         labelInputInstructions = new QLabel(commandInputFrame);
         labelInputInstructions->setObjectName(QString::fromUtf8("labelInputInstructions"));
         labelInputInstructions->setLayoutDirection(Qt::LeftToRight);
-        labelInputInstructions->setStyleSheet(QString::fromUtf8("QLabel{\n"
-"	background-color: rgb(70, 70, 70);\n"
-"}"));
+        labelInputInstructions->setStyleSheet(QString::fromUtf8(""));
         labelInputInstructions->setTextFormat(Qt::AutoText);
         labelInputInstructions->setScaledContents(false);
         labelInputInstructions->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
@@ -305,15 +284,7 @@ public:
 
         commandOutputFrame = new QFrame(centralwidget);
         commandOutputFrame->setObjectName(QString::fromUtf8("commandOutputFrame"));
-        commandOutputFrame->setStyleSheet(QString::fromUtf8("QTableView{\n"
-"	height:25%;\n"
-"	width:100%;\n"
-"}\n"
-"QFrame{\n"
-"	height:75%;\n"
-"	width:100;\n"
-"}\n"
-""));
+        commandOutputFrame->setStyleSheet(QString::fromUtf8(""));
         rightVerticalLayout = new QVBoxLayout(commandOutputFrame);
         rightVerticalLayout->setObjectName(QString::fromUtf8("rightVerticalLayout"));
         progressBarFrame = new QFrame(commandOutputFrame);

@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QProgressBar>
-#include "mainwindow.h"
+#include "MainWindow.h"
 
 class Worker : public QObject
 {

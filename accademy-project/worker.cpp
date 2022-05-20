@@ -1,7 +1,7 @@
 #include "Worker.h"
 #include "ui_MainWindow.h"
 #include "generictask.h"
-#include "sortingtask.h"
+#include "sorting.h"
 
 Worker::Worker(Ui::MainWindow* ui)
 {
@@ -32,17 +32,26 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
         if(type == EnumsType::PossibleType::BubbleSort)
         {
             qDebug() << "Worker::handleMessage -> Inside BubbleSort Type" ;
-            //task = new BubbleSortTask();
+            task = new sorting();
+            task->setType(type);
+            task->setDif(difficulty);
+            task->generateRandomArray();
         }
         else if(type == EnumsType::PossibleType::MergeSort)
         {
             qDebug() << "Worker::handleMessage -> Inside MergeSort Type" ;
-            //task = new MergeSortTask();
+            task = new sorting();
+            task->setType(type);
+            task->setDif(difficulty);
+            task->generateRandomArray();
         }
         else if(type == EnumsType::PossibleType::QuickSort)
         {
             qDebug() << "Worker::handleMessage -> Inside QuickSort Type" ;
-            //task = new QuickSortTask();
+            task = new sorting();
+            task->setType(type);
+            task->setDif(difficulty);
+            task->generateRandomArray();
         }
     }
 

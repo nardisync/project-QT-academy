@@ -19,15 +19,21 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // Getter
     EnumsType::PossibleApproch getApproch();
-    EnumsType::PossibleType getType();
     EnumsType::Difficulty getDifficulty();
+    EnumsType::PossibleType getType();
+
+    // Setter
+    // ....
 
 private slots:
+    // Buttons Slot
     void on_pushButtonApply_clicked();
     void on_pushButtonAppendThread_clicked();
     void on_pushButtonAppendThreadStart_clicked();
 
+    // Combo Box Slots
     void on_comboBoxApproch_currentTextChanged(const QString &comboApprochCurrentText);
     void on_comboBoxType_currentTextChanged(const QString &type);
 
@@ -35,15 +41,17 @@ private:
     Ui::MainWindow *ui;
     Worker *worker;
 
+    // Gestione delle Signals
     void sendSignalCalculate();
 
-    /* Gestione delle Combo Box d'Input */
+    // Update dei dati -> Gestione delle Combo Box d'Input
     void updateTypeComboBox(EnumsType::PossibleApproch approch);
 
-    /* Gestione delle Label info */
+    // Update dei dati -> Gestione delle Label info
     void updateApprochInfo(EnumsType::PossibleApproch approch);
-    void updateTypeInfo(EnumsType::PossibleType type);
     void updateDifficultyInfo(EnumsType::Difficulty difficulty);
+    void updateTypeInfo(EnumsType::PossibleType type);
+
 
 };
 #endif // MAINWINDOW_H

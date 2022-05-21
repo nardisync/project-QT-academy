@@ -14,12 +14,17 @@ QMenuBar, QFrame, QComboBox{
 	color:rgb(255,255,255);
 }
 
-
+QHeaderView::section{
+    background:rgb(51, 51, 51);
+}
 
 QLabel, QRadioButton, QComboBox{
         color: rgb(255, 255, 255);
 }
 
+QProgressBar{
+    color: rgb(255, 255, 255);
+}
 
 QPushButton{
         color: rgb(255, 255, 255);

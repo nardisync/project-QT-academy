@@ -5,7 +5,9 @@
 #include <QObject>
 #include <QDebug>
 #include <QProgressBar>
-#include "mainwindow.h"
+#include <QStandardItemModel>
+#include <QModelIndex>
+#include "MainWindow.h"
 
 class Worker : public QObject
 {
@@ -14,8 +16,23 @@ public:
     Worker(Ui::MainWindow* ui);
     ~Worker();
 
-    void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
+    // Getter
+    QStandardItemModel* getModel();
+
+    // Setter
+    // ....
+
+    // Model and View Handler
+    void addNewItemOnModel(QString threadInfo, EnumsType::PossibleApproch threadApproch, EnumsType::PossibleType threadType, EnumsType::ThreadState threadState);
+    void updateItemsAfterLaunchTask();
+    void updateItemStateOnModel(QString itemName, EnumsType::ThreadState newValue);
+
+
+    // Signal and Slot Handler
     void sendSignalCalculate();
+
+    // Others
+    void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
 
 signals:
     void launchTaskCalculate();
@@ -25,10 +42,9 @@ public slots:
 
 private:
     Ui::MainWindow* ui{nullptr};
-    int progressThreadID;
+    QStandardItemModel *model;
     QMap<int, QString> progressBarThreadMap;
-
-
+    int progressThreadID;
 };
 
 #endif // WORKER_H

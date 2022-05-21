@@ -320,6 +320,14 @@ public:
         logTableView->setObjectName(QString::fromUtf8("logTableView"));
         logTableView->setMinimumSize(QSize(0, 0));
         logTableView->setMaximumSize(QSize(16777215, 16777215));
+        logTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        logTableView->setAlternatingRowColors(false);
+        logTableView->horizontalHeader()->setCascadingSectionResizes(true);
+        logTableView->horizontalHeader()->setDefaultSectionSize(150);
+        logTableView->horizontalHeader()->setStretchLastSection(true);
+        logTableView->verticalHeader()->setVisible(false);
+        logTableView->verticalHeader()->setMinimumSectionSize(35);
+        logTableView->verticalHeader()->setStretchLastSection(false);
 
         rightVerticalLayout->addWidget(logTableView);
 

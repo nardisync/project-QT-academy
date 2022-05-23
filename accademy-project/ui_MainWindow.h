@@ -17,7 +17,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -73,7 +72,6 @@ public:
     QVBoxLayout *rightVerticalLayout;
     QFrame *progressBarFrame;
     QVBoxLayout *verticalLayout_3;
-    QListView *progressBarFrameListView;
     QTableView *logTableView;
     QMenuBar *menubar;
     QMenu *menuAbout;
@@ -303,16 +301,6 @@ public:
         verticalLayout_3->setSpacing(0);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        progressBarFrameListView = new QListView(progressBarFrame);
-        progressBarFrameListView->setObjectName(QString::fromUtf8("progressBarFrameListView"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(progressBarFrameListView->sizePolicy().hasHeightForWidth());
-        progressBarFrameListView->setSizePolicy(sizePolicy3);
-
-        verticalLayout_3->addWidget(progressBarFrameListView);
-
 
         rightVerticalLayout->addWidget(progressBarFrame);
 

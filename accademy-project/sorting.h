@@ -39,6 +39,7 @@ private:
     EnumsType::Difficulty difficulty_;
     EnumsType::PossibleType type_;
     bool jump;
+    bool test;
 };
 
 #endif // SORTING_H

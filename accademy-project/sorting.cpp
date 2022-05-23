@@ -4,7 +4,8 @@
 
 sorting::sorting()
 {
-    this->progress = 0;
+    this->progress = 1;
+    this->test = true;
     // steps:
     // sorting()
     // SetType, SetDifficulty
@@ -101,12 +102,18 @@ void sorting::bubbleSort()
             if (this->array[j] > this->array[j + 1])
                 std::swap(this->array[j], this->array[j + 1]);
 
-        this->progress+=5;
+        this->progress++;
         int signal = static_cast<int>((this->progress*100)/(this->size)+1);
 
-        if (signal%5)
+        if (signal%5==0 && this->test == false)
+        {
+            this->test = true;
             emit updateProgressBar(signal);
-
+        }
+        else if (signal%5!=0)
+        {
+            this->test = false;
+        }
     }
 }
 

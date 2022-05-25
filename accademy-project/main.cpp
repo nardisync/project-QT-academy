@@ -23,5 +23,6 @@ int main(int argc, char *argv[])
 
     w.show();
 
+    qDebug() << "Starting the app:\n\n";
     return a.exec();
 }

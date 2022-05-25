@@ -8,6 +8,7 @@
 #include <QStandardItemModel>
 #include <QModelIndex>
 #include "MainWindow.h"
+#include "generictask.h"
 
 class Worker : public QObject
 {
@@ -32,6 +33,7 @@ public:
     void sendSignalCalculate();
 
     // Others
+    QString addProgressBarToFrame(GenericTask* task);
     void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
 
 signals:

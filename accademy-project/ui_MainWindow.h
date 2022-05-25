@@ -71,7 +71,8 @@ public:
     QFrame *commandOutputFrame;
     QVBoxLayout *rightVerticalLayout;
     QFrame *progressBarFrame;
-    QVBoxLayout *verticalLayout_3;
+    QVBoxLayout *verticalLayoutProgressBarFrame;
+    QSpacerItem *verticalSpacerProgressBar;
     QTableView *logTableView;
     QMenuBar *menubar;
     QMenu *menuAbout;
@@ -285,6 +286,7 @@ public:
         commandOutputFrame->setObjectName(QString::fromUtf8("commandOutputFrame"));
         commandOutputFrame->setStyleSheet(QString::fromUtf8(""));
         rightVerticalLayout = new QVBoxLayout(commandOutputFrame);
+        rightVerticalLayout->setSpacing(10);
         rightVerticalLayout->setObjectName(QString::fromUtf8("rightVerticalLayout"));
         progressBarFrame = new QFrame(commandOutputFrame);
         progressBarFrame->setObjectName(QString::fromUtf8("progressBarFrame"));
@@ -293,21 +295,25 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(progressBarFrame->sizePolicy().hasHeightForWidth());
         progressBarFrame->setSizePolicy(sizePolicy2);
-        progressBarFrame->setMinimumSize(QSize(0, 540));
+        progressBarFrame->setMinimumSize(QSize(0, 0));
         progressBarFrame->setMaximumSize(QSize(16777215, 16777215));
         progressBarFrame->setFrameShape(QFrame::StyledPanel);
         progressBarFrame->setFrameShadow(QFrame::Raised);
-        verticalLayout_3 = new QVBoxLayout(progressBarFrame);
-        verticalLayout_3->setSpacing(0);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        verticalLayoutProgressBarFrame = new QVBoxLayout(progressBarFrame);
+        verticalLayoutProgressBarFrame->setSpacing(10);
+        verticalLayoutProgressBarFrame->setObjectName(QString::fromUtf8("verticalLayoutProgressBarFrame"));
+        verticalLayoutProgressBarFrame->setContentsMargins(0, 0, 0, 0);
 
         rightVerticalLayout->addWidget(progressBarFrame);
+
+        verticalSpacerProgressBar = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        rightVerticalLayout->addItem(verticalSpacerProgressBar);
 
         logTableView = new QTableView(commandOutputFrame);
         logTableView->setObjectName(QString::fromUtf8("logTableView"));
         logTableView->setMinimumSize(QSize(0, 0));
-        logTableView->setMaximumSize(QSize(16777215, 16777215));
+        logTableView->setMaximumSize(QSize(16777215, 180));
         logTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         logTableView->setAlternatingRowColors(false);
         logTableView->horizontalHeader()->setCascadingSectionResizes(true);

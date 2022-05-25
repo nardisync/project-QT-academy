@@ -33,9 +33,9 @@ void MainWindow::on_pushButtonApply_clicked()
     EnumsType::PossibleType type = this->getType();
     EnumsType::Difficulty diff = this-> getDifficulty();
 
-    qDebug() << "MainWindow::on_pushButtonApply_clicked -> Approch: "  << EnumsType::toString(approch) << "\n" <<
-                "MainWindow::on_pushButtonApply_clicked -> Type: "      << EnumsType::toString(type)    << "\n" <<
-                "MainWindow::on_pushButtonApply_clicked -> Difficulty: "<< EnumsType::toString(diff)    <<  "\n";
+    qDebug() << "MainWindow::on_pushButtonApply_clicked -> Approch:    "    << EnumsType::toString(approch) << "\n"
+                "MainWindow::on_pushButtonApply_clicked -> Type:       "    << EnumsType::toString(type)    << "\n"
+                "MainWindow::on_pushButtonApply_clicked -> Difficulty: "    << EnumsType::toString(diff)    << "\n";
 
     this->worker->handleMessage(approch, type, diff);
 
@@ -44,7 +44,7 @@ void MainWindow::on_pushButtonApply_clicked()
     // Cosi crashiamo, ma ci permette di fare l'append
     this->worker->sendSignalCalculate();
 
-    qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP";
+    qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP\n";
 }
 
 void MainWindow::on_pushButtonAppendThread_clicked()
@@ -73,8 +73,8 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
 // ====================== GESTIONE COMBO BOX ======================
 void MainWindow::on_comboBoxApproch_currentTextChanged(const QString &comboApprochCurrentText)
 {
-    qDebug() << "MainWindow::on_comboBoxApproch_textActivated -> START";
-    qDebug() << "comboBoxText: " << comboApprochCurrentText;
+    qDebug() << "MainWindow::on_comboBoxApproch_currentTextChanged -> START";
+    qDebug() << "MainWindow::on_comboBoxApproch_currentTextChanged -> comboBoxText: " << comboApprochCurrentText;
 
     EnumsType::PossibleApproch approch = EnumsType::PossibleApproch::None;
 
@@ -94,7 +94,7 @@ void MainWindow::on_comboBoxApproch_currentTextChanged(const QString &comboAppro
     updateApprochInfo(approch);
     updateTypeComboBox(approch);
 
-    qDebug() << "MainWindow::on_comboBoxApproch_textActivated -> STOP";
+    qDebug() << "MainWindow::on_comboBoxApproch_currentTextChanged -> STOP";
 }
 
 void MainWindow::on_comboBoxType_currentTextChanged(const QString &type)

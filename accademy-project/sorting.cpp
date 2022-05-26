@@ -18,14 +18,17 @@ void sorting::calculate()
     switch (this->type_) {
     case EnumsType::PossibleType::QuickSort:
         quickSort();
+        emit finished();
         //this->progress = 0;
         break;
     case EnumsType::PossibleType::MergeSort:
         mergeSort();
+        emit finished();
         //this->progress = 0;
         break;
     case EnumsType::PossibleType::BubbleSort:
         bubbleSort();
+        emit finished();
         //this->progress = 0;
         break;
     default:

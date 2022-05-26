@@ -23,10 +23,10 @@ public:
     virtual void generateRandomArray();
     void printArray();
 
-    virtual int getID() override {return this->ID;};
-    virtual void setID(int id) override {this->ID = id;};
-    virtual void setDif(EnumsType::Difficulty d) override {this->difficulty_ = d;};
-    virtual void setType(EnumsType::PossibleType t)  override {this->type_ = t;};
+    virtual int getID() override {return this->ID;}
+    virtual void setID(int id) override {this->ID = id;}
+    virtual void setDif(EnumsType::Difficulty d) override {this->difficulty_ = d;}
+    virtual void setType(EnumsType::PossibleType t)  override {this->type_ = t;}
 public slots:
     virtual void calculate() override;
 

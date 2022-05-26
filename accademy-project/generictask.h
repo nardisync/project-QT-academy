@@ -20,6 +20,7 @@ public slots:
 
 signals:
     void updateProgressBar(int);
+    void finished();
 
 protected:
     int id;

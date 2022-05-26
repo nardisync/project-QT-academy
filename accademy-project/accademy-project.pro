@@ -2,6 +2,7 @@ QT      += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG  += c++20
+CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += \
     Main.cpp \

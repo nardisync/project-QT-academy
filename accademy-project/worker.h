@@ -42,6 +42,7 @@ public:
     QString addProgressBarToFrame(GenericTask* task);
     void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
 
+    void deleteTask();
 
 signals:
     void launchTaskCalculate();

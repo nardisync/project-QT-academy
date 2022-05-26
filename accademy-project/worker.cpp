@@ -116,20 +116,19 @@ void Worker::updateItemsAfterLaunchTask()
 // ====================== GESTIONE DEGLI SLOT ======================
 void Worker::slotUpdateProgressBar(int perc)
 {
-    //qDebug() << "Worker::slotUpdateProgressBar -> START";
+    qDebug() << "Worker::slotUpdateProgressBar -> START";
 
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
 
     QProgressBar* temp = ui->progressBarFrame->findChild<QProgressBar*>(it.value());
     temp->setValue(perc);
-    // qDebug() << "Perc: " << perc;
     if(perc == 100)
     {
         updateItemStateOnModel(it.value(), EnumsType::ThreadState::Completed);
     }
 
-    //qDebug() << "Worker::slotUpdateProgressBar -> STOP";
+    qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
 // ================================================================
 
@@ -199,9 +198,9 @@ QString Worker::addProgressBarToFrame(GenericTask *task)
     // Gestione delle Connect e del Thread
     task->setID(progressThreadID);
     task->moveToThread(workerThread);
-    QObject::connect(this, &Worker::launchTaskCalculate, task, &GenericTask::calculate);
+    QObject::connect(this, &Worker::launchTaskCalculate,    task, &GenericTask::calculate);
     QObject::connect(task, &GenericTask::updateProgressBar, this, &Worker::slotUpdateProgressBar);
-
+    QObject::connect(task, &GenericTask::finished,          this, &Worker::deleteTask);
 
     // Gestione della Progress Bar
     QString progressBarObjectUniqueName   = "ProgressBar_ID_" + QString::number(progressThreadID);
@@ -234,7 +233,12 @@ QString Worker::addProgressBarToFrame(GenericTask *task)
     return progressBarObjectUniqueName;
 }
 
-
+void Worker::deleteTask()
+{
+    GenericTask * task = dynamic_cast<GenericTask*>(sender());
+    qInfo() << "Thread " << progressBarThreadMap.find(task->getID()).value() << " completed";
+    delete task;
+}
 
 // ====================== GETTER ======================
 QStandardItemModel* Worker::getModel()

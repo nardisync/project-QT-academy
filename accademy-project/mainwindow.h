@@ -37,14 +37,13 @@ private slots:
     void on_pushButtonAppendThread_clicked();
     void on_pushButtonAppendThreadStart_clicked();
 
-
     // Combo Box Slots
     void on_comboBoxApproch_currentTextChanged(const QString &comboApprochCurrentText);
     void on_comboBoxType_currentTextChanged(const QString &type);
 
-
     // Menu Slots
     void on_actionCreators_triggered();
+    void customMenuRequested();
 
 private:
 

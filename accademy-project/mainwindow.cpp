@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     worker = new Worker(ui);
 
+    ui->logTableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    QObject::connect(ui->logTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested()));
+    ui->logTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->logTableView->setModel(worker->getModel());
 
     // Update delle Label e delle Combo Box
@@ -26,7 +29,14 @@ MainWindow::~MainWindow()
 }
 // ===========================================================================================
 
-
+void MainWindow::customMenuRequested()
+{
+    QItemSelectionModel *select = ui->logTableView->selectionModel();
+    for(auto id : select->selectedRows())
+    {
+        ui->logTableView->model()->removeRow(id.row());
+    }
+}
 
 // ====================================== GESTIONE BUTTONS =======================================
 void MainWindow::on_pushButtonApply_clicked()
@@ -104,6 +114,7 @@ void MainWindow::on_comboBoxApproch_currentTextChanged(const QString &comboAppro
 
 void MainWindow::on_comboBoxType_currentTextChanged(const QString &type)
 {
+    Q_UNUSED(type);
     qDebug() << "MainWindow::on_comboBoxType_currentTextChanged -> START";
 
     updateTypeInfo(getType());

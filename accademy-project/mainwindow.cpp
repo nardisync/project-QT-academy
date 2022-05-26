@@ -3,7 +3,7 @@
 #include "Worker.h"
 #include "ConstStringDefinition.h"
 
-
+// =================================== MAIN WINDOW ==========================================
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     ,   ui(new Ui::MainWindow)
@@ -24,8 +24,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+// ===========================================================================================
 
-// ====================== GESTIONE BUTTONS ======================
+
+
+// ====================================== GESTIONE BUTTONS =======================================
 void MainWindow::on_pushButtonApply_clicked()
 {
     qDebug() << "MainWindow::on_pushButtonApply_clicked -> START";
@@ -68,9 +71,11 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
 
     qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP";
 }
+// ===============================================================================================
 
 
-// ====================== GESTIONE COMBO BOX ======================
+
+// ===================================== GESTIONE COMBO BOX =====================================
 void MainWindow::on_comboBoxApproch_currentTextChanged(const QString &comboApprochCurrentText)
 {
     qDebug() << "MainWindow::on_comboBoxApproch_currentTextChanged -> START";
@@ -105,6 +110,25 @@ void MainWindow::on_comboBoxType_currentTextChanged(const QString &type)
 
     qDebug() << "MainWindow::on_comboBoxType_currentTextChanged -> STOP";
 }
+// ===============================================================================================
+
+
+
+
+// ====================== GESTIONE MENU ======================
+void MainWindow::on_actionCreators_triggered()
+{
+    qDebug() << "Worker::on_actionCreators_triggered -> START";
+    QMessageBox msgBox;
+    msgBox.setObjectName("creatorsMessageBox");
+    msgBox.setWindowTitle("About the creators");
+    msgBox.setText(MENU_CREATORS_INFO_RICH_TEXT);
+    msgBox.setTextFormat(Qt::RichText);
+    msgBox.exec();
+    qDebug() << "Worker::on_actionCreators_triggered -> STOP";
+}
+// ===========================================================
+
 
 
 // ====================== GESTIONE DEGLI UPDATES ======================
@@ -194,9 +218,11 @@ void MainWindow::updateTypeInfo(EnumsType::PossibleType type)
 
     qDebug() << "MainWindow::updateTypeInfo -> STOP";
 }
+// ====================================================================
 
 
-// ====================== GETTER ======================
+
+// ========================== GETTER ==========================
 EnumsType::PossibleApproch MainWindow::getApproch()
 {
 
@@ -261,7 +287,6 @@ EnumsType::PossibleType MainWindow::getType()
 
     return EnumsType::PossibleType::None;
 }
-
-
+// ============================================================
 
 

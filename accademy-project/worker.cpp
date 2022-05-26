@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 #include "sorting.h"
 
-
+// ====================== MAIN WINDOW ======================
 Worker::Worker(Ui::MainWindow* ui)
 {
     this->ui = ui;
@@ -19,6 +19,8 @@ Worker::~Worker()
 {
 
 }
+// =========================================================
+
 
 
 // ====================== GESTIONE DELLE SLOT ======================
@@ -31,6 +33,8 @@ void Worker::sendSignalCalculate()
 
     qDebug() << "Worker::sendSignalCalculate -> STOP";
 }
+// ===============================================================
+
 
 
 // ====================== GESTIONE DEL MODEL E DELLA VIEW ======================
@@ -105,6 +109,8 @@ void Worker::updateItemsAfterLaunchTask()
 
     qDebug() << "Worker::updateItemsAfterLaunchTask -> STOP";
 }
+// ==============================================================================
+
 
 
 // ====================== GESTIONE DEGLI SLOT ======================
@@ -125,6 +131,8 @@ void Worker::slotUpdateProgressBar(int perc)
 
     //qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
+// ================================================================
+
 
 
 // ====================== GESTIONE DEI MESSAGGI IN INPUT ======================
@@ -172,6 +180,8 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
 
     qDebug() << "Worker::handleMessage -> STOP";
 }
+// ============================================================================
+
 
 
 // ====================== GESTIONE DELLA CREAZIONE DELLA PROGRESS BAR ======================
@@ -224,8 +234,13 @@ QString Worker::addProgressBarToFrame(GenericTask *task)
     return progressBarObjectUniqueName;
 }
 
+
+
 // ====================== GETTER ======================
 QStandardItemModel* Worker::getModel()
 {
     return model;
 }
+// ====================================================
+
+

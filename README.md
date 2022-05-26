@@ -1,1 +1,1 @@
-## QT Accademy Project
+## QT Academy Project

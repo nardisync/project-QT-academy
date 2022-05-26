@@ -6,10 +6,10 @@
 class EnumsType
 {
 public:
+
     // =======================
     // Gestione dell'approccio
     // =======================
-
     enum class PossibleApproch
     {
         Sorting = 0,
@@ -22,8 +22,6 @@ public:
     // =====================================
     // Gestione delle tipologie di approccio
     // =====================================
-
-
     enum class PossibleType
     {
         // SortingType
@@ -45,7 +43,6 @@ public:
     // =========================
     // Gestione della difficoltà
     // =========================
-
     enum class Difficulty
     {
         Easy = 0,
@@ -63,6 +60,7 @@ public:
         None = 69
     };
 
+
     // =================== GESTIONE DEL ENUM TO STRING DI APPROCH ===================
     static QString toString(EnumsType::PossibleApproch enumApproch)
     {
@@ -76,6 +74,9 @@ public:
         }
         return enumToString;
     }
+    // ==============================================================================
+
+
 
     // =================== GESTIONE DEL ENUM TO STRING DI TYPE ===================
     static QString toString(EnumsType::PossibleType enumType)
@@ -92,6 +93,9 @@ public:
         }
         return enumToString;
     }
+    // ==========================================================================
+
+
 
     // =================== GESTIONE DEL ENUM TO STRING DI DIFFICULTY ===================
     static QString toString(EnumsType::Difficulty enumDiff)
@@ -106,6 +110,9 @@ public:
         }
         return enumToString;
     }
+    // ==================================================================================
+
+
 
     // =================== GESTIONE DEL ENUM TO STRING DI THREAD STATE ===================
     static QString toString(EnumsType::ThreadState enumThreadState)
@@ -121,7 +128,7 @@ public:
         }
         return enumToString;
     }
-
+    // ====================================================================================
 
 
 };

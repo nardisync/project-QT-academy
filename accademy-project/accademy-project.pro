@@ -27,3 +27,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     stylesheet.qss
+
+RC_ICONS = images/ico/accademy.ico

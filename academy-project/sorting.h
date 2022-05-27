@@ -40,6 +40,7 @@ private:
     EnumsType::PossibleType type_;
     bool jump;
     bool test;
+    bool in_exec_ = false;
 };
 
 #endif // SORTING_H

@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "Worker.h"
 #include "ConstStringDefinition.h"
+#include <QTimer>
 
 // =================================== MAIN WINDOW ==========================================
 MainWindow::MainWindow(QWidget *parent)
@@ -42,6 +43,7 @@ void MainWindow::customMenuRequested()
 void MainWindow::on_pushButtonApply_clicked()
 {
     qDebug() << "MainWindow::on_pushButtonApply_clicked -> START";
+
     EnumsType::PossibleApproch approch = this->getApproch();
     EnumsType::PossibleType type = this->getType();
     EnumsType::Difficulty diff = this-> getDifficulty();
@@ -51,10 +53,6 @@ void MainWindow::on_pushButtonApply_clicked()
                 "MainWindow::on_pushButtonApply_clicked -> Difficulty: "    << EnumsType::toString(diff)    << "\n";
 
     this->worker->handleMessage(approch, type, diff);
-
-    // TO-DO: Vogliamo lasciarlo pubblico? o implementiamo
-    // un altro sistema?
-    // Cosi crashiamo, ma ci permette di fare l'append
     this->worker->sendSignalCalculate();
 
     qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP\n";

@@ -50,13 +50,6 @@ void Worker::addNewItemOnModel(QString threadName, EnumsType::PossibleApproch th
                              EnumsType::toString(threadType), EnumsType::toString(threadState)};
 
 
-    /*
-    this->model->insertRow(this->model->rowCount(QModelIndex()));
-
-    int numberOfCol = this->model->columnCount(QModelIndex());
-    int rowToInsert = this->model->rowCount(QModelIndex()) - 1;
-    */
-
     this->model->insertRow(0);
 
     int numberOfCol = this->model->columnCount(QModelIndex());
@@ -116,7 +109,7 @@ void Worker::updateItemsAfterLaunchTask()
 // ====================== GESTIONE DEGLI SLOT ======================
 void Worker::slotUpdateProgressBar(int perc)
 {
-    qDebug() << "Worker::slotUpdateProgressBar -> START";
+    //qDebug() << "Worker::slotUpdateProgressBar -> START";
 
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
@@ -128,7 +121,7 @@ void Worker::slotUpdateProgressBar(int perc)
         updateItemStateOnModel(it.value(), EnumsType::ThreadState::Completed);
     }
 
-    qDebug() << "Worker::slotUpdateProgressBar -> STOP";
+    //qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
 // ================================================================
 
@@ -152,6 +145,7 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
         task->setType(type);
         task->setDif(difficulty);
         task->generateRandomArray();
+
     }
 
     else if(approch == EnumsType::PossibleApproch::Merging)
@@ -169,7 +163,6 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
             //task = new NormalProblemTask();
         }
     }
-
 
     if(task != nullptr)
     {
@@ -236,7 +229,8 @@ QString Worker::addProgressBarToFrame(GenericTask *task)
 void Worker::deleteTask()
 {
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
-    qInfo() << "Thread " << progressBarThreadMap.find(task->getID()).value() << " completed";
+    qInfo() << "Worker::deleteTask -> Thread " << progressBarThreadMap.find(task->getID()).value() << " completed";
+
     delete task;
 }
 

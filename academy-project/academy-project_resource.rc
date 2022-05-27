@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	"C:\\Users\\Marco\\Documents\\GitHub\\project-QT-accademy\\accademy-project\\images\\ico\\accademy.ico"
+IDI_ICON1	ICON	"C:\\Users\\Marco\\Documents\\GitHub\\project-QT-academy\\academy-project\\images\\ico\\academy.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
@@ -23,8 +23,8 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "FileDescription", "\0"
 				VALUE "FileVersion", "0.0.0.0\0"
 				VALUE "LegalCopyright", "\0"
-				VALUE "OriginalFilename", "accademy-project.exe\0"
-				VALUE "ProductName", "accademy-project\0"
+				VALUE "OriginalFilename", "academy-project.exe\0"
+				VALUE "ProductName", "academy-project\0"
 				VALUE "ProductVersion", "0.0.0.0\0"
 				VALUE "InternalName", "\0"
 				VALUE "Comments", "\0"

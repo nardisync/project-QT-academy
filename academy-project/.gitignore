@@ -5,5 +5,5 @@ Makefile*
 debug
 release
 .qmake.stash
-accademy-project.pro.user
+academy-project.pro.user
 .rc

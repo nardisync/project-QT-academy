@@ -15,6 +15,11 @@ sorting::sorting()
 
 void sorting::calculate()
 {
+    if(in_exec_ == true){
+        return;
+    }
+    in_exec_ = true;
+
     switch (this->type_) {
     case EnumsType::PossibleType::QuickSort:
         quickSort();

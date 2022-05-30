@@ -114,7 +114,7 @@ void Worker::slotUpdateProgressBar(int perc)
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
 
-    QProgressBar* temp = ui->progressBarFrame->findChild<QProgressBar*>(it.value());
+    QProgressBar* temp = ui->scrollAreaWidgetProgressBar->findChild<QProgressBar*>(it.value());
     temp->setValue(perc);
     if(perc == 100)
     {
@@ -213,7 +213,7 @@ QString Worker::addProgressBarToFrame(GenericTask *task)
     progressBarHorFrame->setLayout(horizLayout);
     progressBarHorFrame->layout()->addWidget(progressBarLabel);
     progressBarHorFrame->layout()->addWidget(progressBarObject);
-    this->ui->progressBarFrame->layout()->addWidget(progressBarHorFrame);
+    this->ui->scrollAreaWidgetProgressBar->layout()->addWidget(progressBarHorFrame);
 
     qDebug() << "Worker::addProgressBarToFrame -> Added new progressBarFrame:  " << progressBarFrameUniqueName;
     qDebug() << "Worker::addProgressBarToFrame -> Added new progressBarObject: " << progressBarObjectUniqueName;

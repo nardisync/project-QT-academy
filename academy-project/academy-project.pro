@@ -30,3 +30,4 @@ DISTFILES += \
     stylesheet.qss
 
 RC_ICONS = images/ico/academy.ico
+

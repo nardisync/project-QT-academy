@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.setWindowTitle("Accademy Project");
+    w.setWindowTitle("Academy Project");
 
     QFile styleSheetFile("stylesheet.qss");
 

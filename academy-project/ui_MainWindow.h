@@ -22,6 +22,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
@@ -70,9 +71,9 @@ public:
     QLabel *labelInputInstructions;
     QFrame *commandOutputFrame;
     QVBoxLayout *rightVerticalLayout;
-    QFrame *progressBarFrame;
-    QVBoxLayout *verticalLayoutProgressBarFrame;
-    QSpacerItem *verticalSpacerProgressBar;
+    QScrollArea *scrollAreaOutputFrame;
+    QWidget *scrollAreaWidgetProgressBar;
+    QVBoxLayout *verticalLayout_3;
     QTableView *logTableView;
     QMenuBar *menubar;
     QMenu *menuAbout;
@@ -288,27 +289,23 @@ public:
         rightVerticalLayout = new QVBoxLayout(commandOutputFrame);
         rightVerticalLayout->setSpacing(10);
         rightVerticalLayout->setObjectName(QString::fromUtf8("rightVerticalLayout"));
-        progressBarFrame = new QFrame(commandOutputFrame);
-        progressBarFrame->setObjectName(QString::fromUtf8("progressBarFrame"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        scrollAreaOutputFrame = new QScrollArea(commandOutputFrame);
+        scrollAreaOutputFrame->setObjectName(QString::fromUtf8("scrollAreaOutputFrame"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(progressBarFrame->sizePolicy().hasHeightForWidth());
-        progressBarFrame->setSizePolicy(sizePolicy2);
-        progressBarFrame->setMinimumSize(QSize(0, 0));
-        progressBarFrame->setMaximumSize(QSize(16777215, 16777215));
-        progressBarFrame->setFrameShape(QFrame::StyledPanel);
-        progressBarFrame->setFrameShadow(QFrame::Raised);
-        verticalLayoutProgressBarFrame = new QVBoxLayout(progressBarFrame);
-        verticalLayoutProgressBarFrame->setSpacing(10);
-        verticalLayoutProgressBarFrame->setObjectName(QString::fromUtf8("verticalLayoutProgressBarFrame"));
-        verticalLayoutProgressBarFrame->setContentsMargins(0, 0, 0, 0);
+        sizePolicy2.setHeightForWidth(scrollAreaOutputFrame->sizePolicy().hasHeightForWidth());
+        scrollAreaOutputFrame->setSizePolicy(sizePolicy2);
+        scrollAreaOutputFrame->setWidgetResizable(true);
+        scrollAreaWidgetProgressBar = new QWidget();
+        scrollAreaWidgetProgressBar->setObjectName(QString::fromUtf8("scrollAreaWidgetProgressBar"));
+        scrollAreaWidgetProgressBar->setGeometry(QRect(0, 0, 768, 529));
+        scrollAreaWidgetProgressBar->setAutoFillBackground(false);
+        verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetProgressBar);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        scrollAreaOutputFrame->setWidget(scrollAreaWidgetProgressBar);
 
-        rightVerticalLayout->addWidget(progressBarFrame);
-
-        verticalSpacerProgressBar = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        rightVerticalLayout->addItem(verticalSpacerProgressBar);
+        rightVerticalLayout->addWidget(scrollAreaOutputFrame);
 
         logTableView = new QTableView(commandOutputFrame);
         logTableView->setObjectName(QString::fromUtf8("logTableView"));

@@ -4,6 +4,10 @@ QMainWindow{
         color: rgb(255, 255, 255);
 }
 
+QWidget#scrollAreaWidgetProgressBar{
+    background:rgb(70, 70, 70);
+    color:rgb(255,255,255);
+}
 
 QMenu, QAction, QMenuBar, QFrame, QComboBox, QMessageBox, QHeaderView::section{
         background:rgb(51, 51, 51);

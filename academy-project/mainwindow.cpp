@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 #include "Worker.h"
 #include "ConstStringDefinition.h"
-#include <QTimer>
+
 
 // =================================== MAIN WINDOW ==========================================
 MainWindow::MainWindow(QWidget *parent)

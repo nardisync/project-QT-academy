@@ -13,6 +13,7 @@ SOURCES += \
 HEADERS += \
     ConstStringDefinition.h \
     EnumsType.h \
+    GenericWorker.h \
     MainWindow.h \
     Worker.h \
     GenericTask.h \

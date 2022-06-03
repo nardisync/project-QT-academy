@@ -52,7 +52,14 @@ void MainWindow::on_pushButtonApply_clicked()
                 "MainWindow::on_pushButtonApply_clicked -> Type:       "    << EnumsType::toString(type)    << "\n"
                 "MainWindow::on_pushButtonApply_clicked -> Difficulty: "    << EnumsType::toString(diff)    << "\n";
 
-    this->worker->handleMessage(approch, type, diff);
+    int newTaskID = this->worker->handleMessage(approch, type, diff);
+
+    if (newTaskID == 0) {
+        throw std::invalid_argument( "Worker::handleMessage didn't generate a task" );
+    }
+    QString progressBarObjectUniqueName = addProgressBarToFrame(newTaskID);
+    this->worker->addNewItemOnModel(progressBarObjectUniqueName, approch, type, diff, EnumsType::ThreadState::Started);
+
     this->worker->sendSignalCalculate();
 
     qDebug() << "MainWindow::on_pushButtonApply_clicked -> STOP\n";
@@ -66,7 +73,13 @@ void MainWindow::on_pushButtonAppendThread_clicked()
     EnumsType::PossibleType type = this->getType();
     EnumsType::Difficulty diff = this-> getDifficulty();
 
-    this->worker->handleMessage(approch, type, diff);
+    int newTaskID = this->worker->handleMessage(approch, type, diff);
+
+    if (newTaskID == 0) {
+        throw std::invalid_argument( "Worker::handleMessage didn't generate a task" );
+    }
+    QString progressBarObjectUniqueName = addProgressBarToFrame(newTaskID);
+    this->worker->addNewItemOnModel(progressBarObjectUniqueName, approch, type, diff, EnumsType::ThreadState::Started);
 
     qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> STOP";
 }
@@ -80,6 +93,48 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
     qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP";
 }
 // ===============================================================================================
+
+
+// ====================== GESTIONE DELLA CREAZIONE DELLA PROGRESS BAR ======================
+QString MainWindow::addProgressBarToFrame(int taskID)
+{
+    qDebug() << "MainWindow::addProgressBarToFrame -> START";
+
+    // Dichiarazione delle variabili
+    QFrame*         progressBarHorFrame = new QFrame();
+    QProgressBar*   progressBarObject   = new QProgressBar();
+    QLabel*         progressBarLabel    = new QLabel();
+    QHBoxLayout*    horizLayout         = new QHBoxLayout;
+
+    // Gestione della Progress Bar
+    QString progressBarObjectUniqueName   = "ProgressBar_ID_" + QString::number(taskID);
+    this->worker->insertValueToProgressBarThreadMap(taskID, progressBarObjectUniqueName);
+    progressBarObject->setObjectName(progressBarObjectUniqueName);
+    progressBarObject->setValue(0);
+
+
+    // Gestione della Label della Progress Bar
+    QString progressBarLabelUniqueName   = "labelProgressBarID_" + QString::number(taskID);
+    progressBarLabel->setText(progressBarObjectUniqueName + ": ");
+    progressBarLabel->setObjectName(progressBarLabelUniqueName);
+
+    //Gestione del Frame della Progress Bar
+    QString progressBarFrameUniqueName   = "FrameProgressBar_ID_" + QString::number(taskID);
+    progressBarHorFrame->setObjectName(progressBarFrameUniqueName);
+    progressBarHorFrame->setLayout(horizLayout);
+    progressBarHorFrame->layout()->addWidget(progressBarLabel);
+    progressBarHorFrame->layout()->addWidget(progressBarObject);
+    this->ui->scrollAreaWidgetProgressBar->layout()->addWidget(progressBarHorFrame);
+
+    qDebug() << "MainWindow::addProgressBarToFrame -> Added new progressBarFrame:  " << progressBarFrameUniqueName;
+    qDebug() << "MainWindow::addProgressBarToFrame -> Added new progressBarObject: " << progressBarObjectUniqueName;
+    qDebug() << "MainWindow::addProgressBarToFrame -> Added new progressBarLabel:  " << progressBarLabelUniqueName;
+
+
+
+    qDebug() << "MainWindow::addProgressBarToFrame -> STOP";
+    return progressBarObjectUniqueName;
+}
 
 
 

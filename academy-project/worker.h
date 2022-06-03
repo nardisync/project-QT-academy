@@ -29,7 +29,8 @@ public:
 
 
     // Model and View Handler
-    void addNewItemOnModel(QString threadInfo, EnumsType::PossibleApproch threadApproch, EnumsType::PossibleType threadType, EnumsType::ThreadState threadState);
+    void addNewItemOnModel(QString threadInfo, EnumsType::PossibleApproch threadApproch, EnumsType::PossibleType threadType,
+                           EnumsType::Difficulty threadDiff, EnumsType::ThreadState threadState);
     void updateItemsAfterLaunchTask();
     void updateItemStateOnModel(QString itemName, EnumsType::ThreadState newValue);
 
@@ -37,10 +38,12 @@ public:
     // Signal and Slot Handler
     void sendSignalCalculate();
 
+    // QMap Handlers
+    void insertValueToProgressBarThreadMap(int taskID, QString progressBarObjectUniqueName);
+
 
     // Others
-    QString addProgressBarToFrame(GenericTask* task);
-    void handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
+    int handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
 
     void deleteTask();
 

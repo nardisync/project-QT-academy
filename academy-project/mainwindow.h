@@ -30,6 +30,9 @@ public:
     // Setter
     // ....
 
+    // Other
+    QString addProgressBarToFrame(int taskID);
+
 private slots:
 
     // Buttons Slot

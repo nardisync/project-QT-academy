@@ -2,28 +2,29 @@
 #include "ui_MainWindow.h"
 #include "sorting.h"
 
-// ====================== MAIN WINDOW ======================
+// ====================== MAIN WINDOW =========================================
 Worker::Worker(Ui::MainWindow* ui)
 {
     this->ui = ui;
     progressThreadID = 1;
 
-    model = new QStandardItemModel(0, 4, this);
+    model = new QStandardItemModel(0, 5, this);
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Thread Name"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Approch"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("Type"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Status"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Difficulty"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Status"));
 }
 
 Worker::~Worker()
 {
 
 }
-// =========================================================
+// ============================================================================
 
 
 
-// ====================== GESTIONE DELLE SLOT ======================
+// ====================== GESTIONE DELLE SLOT =================================
 void Worker::sendSignalCalculate()
 {
     qDebug() << "Worker::sendSignalCalculate -> START";
@@ -33,21 +34,31 @@ void Worker::sendSignalCalculate()
 
     qDebug() << "Worker::sendSignalCalculate -> STOP";
 }
-// ===============================================================
+// ============================================================================
 
+
+// ============================ GESTIONE DELLA QMAP ============================
+void Worker::insertValueToProgressBarThreadMap(int taskID, QString progressBarObjectUniqueName)
+{
+    progressBarThreadMap.insert(taskID, progressBarObjectUniqueName);
+}
+// =============================================================================
 
 
 // ====================== GESTIONE DEL MODEL E DELLA VIEW ======================
-void Worker::addNewItemOnModel(QString threadName, EnumsType::PossibleApproch threadApproch, EnumsType::PossibleType threadType, EnumsType::ThreadState threadState)
+void Worker::addNewItemOnModel(QString threadName, EnumsType::PossibleApproch threadApproch,
+                               EnumsType::PossibleType threadType, EnumsType::Difficulty threadDiff,
+                               EnumsType::ThreadState threadState)
 {
     qDebug() << "Worker::addNewItemOnModel -> START";
     qDebug() << "Worker::addNewItemOnModel -> ThreadName:    "  << threadName << "\n"
                 "Worker::addNewItemOnModel -> ThreadApproch: "  << EnumsType::toString(threadApproch)   << "\n"
                 "Worker::addNewItemOnModel -> ThreadType:    "  << EnumsType::toString(threadType)      << "\n"
+                "Worker::addNewItemOnModel -> ThreadDiff:    "  << EnumsType::toString(threadDiff)      << "\n"
                 "Worker::addNewItemOnModel -> ThreadState:   "  << EnumsType::toString(threadState);
 
-    QString threadInfo[4] = {threadName, EnumsType::toString(threadApproch),
-                             EnumsType::toString(threadType), EnumsType::toString(threadState)};
+    QString threadInfo[5] = {threadName, EnumsType::toString(threadApproch), EnumsType::toString(threadType),
+                             EnumsType::toString(threadDiff), EnumsType::toString(threadState)};
 
 
     this->model->insertRow(0);
@@ -78,7 +89,7 @@ void Worker::updateItemStateOnModel(QString itemName, EnumsType::ThreadState new
         index = this->model->index(row, 0, QModelIndex());
         if(index.data() == itemName)
         {
-            index = this->model->index(row, 3, QModelIndex());
+            index = this->model->index(row, 4, QModelIndex());
             this->model->setData(index, EnumsType::toString(newValue));
         }
     }
@@ -93,7 +104,7 @@ void Worker::updateItemsAfterLaunchTask()
     QModelIndex index;
     for(int row = 0; row < this->model->rowCount(); row++)
     {
-        index = this->model->index(row, 3, QModelIndex());
+        index = this->model->index(row, 4, QModelIndex());
         if(index.data() == EnumsType::toString(EnumsType::ThreadState::Started))
         {
             this->model->setData(index, EnumsType::toString(EnumsType::ThreadState::Working));
@@ -102,11 +113,10 @@ void Worker::updateItemsAfterLaunchTask()
 
     qDebug() << "Worker::updateItemsAfterLaunchTask -> STOP";
 }
-// ==============================================================================
+// =============================================================================
 
 
-
-// ====================== GESTIONE DEGLI SLOT ======================
+// ====================== GESTIONE DEGLI SLOT ==================================
 void Worker::slotUpdateProgressBar(int perc)
 {
     //qDebug() << "Worker::slotUpdateProgressBar -> START";
@@ -123,12 +133,12 @@ void Worker::slotUpdateProgressBar(int perc)
 
     //qDebug() << "Worker::slotUpdateProgressBar -> STOP";
 }
-// ================================================================
+// =============================================================================
 
 
 
-// ====================== GESTIONE DEI MESSAGGI IN INPUT ======================
-void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
+// ====================== GESTIONE DEI MESSAGGI IN INPUT =======================
+int Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
 {
     qDebug() << "Worker::handleMessage -> START";
 
@@ -136,7 +146,7 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
                 "Worker::handleMessage -> Type:       " << EnumsType::toString(type)        <<  "\n"
                 "Worker::handleMessage -> Difficulty: " << EnumsType::toString(difficulty)  <<  "\n";
 
-
+    QThread     * workerThread  = new QThread();
     GenericTask * task{nullptr};
 
     if(approch == EnumsType::PossibleApproch::Sorting)
@@ -166,65 +176,24 @@ void Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possib
 
     if(task != nullptr)
     {
-        QString progressBarObjectUniqueName = addProgressBarToFrame(task);
-        addNewItemOnModel(progressBarObjectUniqueName, approch, type, EnumsType::ThreadState::Started);
+        // Gestione delle Connect e del Thread
+        task->setID(progressThreadID);
+        task->moveToThread(workerThread);
+        QObject::connect(this, &Worker::launchTaskCalculate,    task, &GenericTask::calculate);
+        QObject::connect(task, &GenericTask::updateProgressBar, this, &Worker::slotUpdateProgressBar);
+        QObject::connect(task, &GenericTask::finished,          this, &Worker::deleteTask);
+        progressThreadID++;
+        workerThread->start();
+
+        return task->getID();
     }
+
+    return 0;
 
     qDebug() << "Worker::handleMessage -> STOP";
 }
-// ============================================================================
+// =============================================================================
 
-
-
-// ====================== GESTIONE DELLA CREAZIONE DELLA PROGRESS BAR ======================
-QString Worker::addProgressBarToFrame(GenericTask *task)
-{
-    qDebug() << "Worker::addProgressBarToFrame -> START";
-
-    // Dichiarazione delle variabili
-    QFrame*         progressBarHorFrame = new QFrame();
-    QProgressBar*   progressBarObject   = new QProgressBar();
-    QLabel*         progressBarLabel    = new QLabel();
-    QHBoxLayout*    horizLayout         = new QHBoxLayout;
-    QThread *       workerThread        = new QThread();
-
-    // Gestione delle Connect e del Thread
-    task->setID(progressThreadID);
-    task->moveToThread(workerThread);
-    QObject::connect(this, &Worker::launchTaskCalculate,    task, &GenericTask::calculate);
-    QObject::connect(task, &GenericTask::updateProgressBar, this, &Worker::slotUpdateProgressBar);
-    QObject::connect(task, &GenericTask::finished,          this, &Worker::deleteTask);
-
-    // Gestione della Progress Bar
-    QString progressBarObjectUniqueName   = "ProgressBar_ID_" + QString::number(progressThreadID);
-    progressBarThreadMap.insert(progressThreadID, progressBarObjectUniqueName);
-    progressBarObject->setObjectName(progressBarObjectUniqueName);
-    progressBarObject->setValue(0);
-
-
-    // Gestione della Label della Progress Bar
-    QString progressBarLabelUniqueName   = "labelProgressBarID_" + QString::number(progressThreadID);
-    progressBarLabel->setText(progressBarObjectUniqueName + ": ");
-    progressBarLabel->setObjectName(progressBarLabelUniqueName);
-
-    //Gestione del Frame della Progress Bar
-    QString progressBarFrameUniqueName   = "FrameProgressBar_ID_" + QString::number(progressThreadID);
-    progressBarHorFrame->setObjectName(progressBarFrameUniqueName);
-    progressBarHorFrame->setLayout(horizLayout);
-    progressBarHorFrame->layout()->addWidget(progressBarLabel);
-    progressBarHorFrame->layout()->addWidget(progressBarObject);
-    this->ui->scrollAreaWidgetProgressBar->layout()->addWidget(progressBarHorFrame);
-
-    qDebug() << "Worker::addProgressBarToFrame -> Added new progressBarFrame:  " << progressBarFrameUniqueName;
-    qDebug() << "Worker::addProgressBarToFrame -> Added new progressBarObject: " << progressBarObjectUniqueName;
-    qDebug() << "Worker::addProgressBarToFrame -> Added new progressBarLabel:  " << progressBarLabelUniqueName;
-
-    progressThreadID++;
-    workerThread->start();
-
-    qDebug() << "Worker::addProgressBarToFrame -> STOP";
-    return progressBarObjectUniqueName;
-}
 
 void Worker::deleteTask()
 {
@@ -234,11 +203,11 @@ void Worker::deleteTask()
     delete task;
 }
 
-// ====================== GETTER ======================
+// ====================== GETTER ===============================================
 QStandardItemModel* Worker::getModel()
 {
     return model;
 }
-// ====================================================
+// =============================================================================
 
 

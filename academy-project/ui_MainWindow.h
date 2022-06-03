@@ -74,6 +74,7 @@ public:
     QScrollArea *scrollAreaOutputFrame;
     QWidget *scrollAreaWidgetProgressBar;
     QVBoxLayout *verticalLayout_3;
+    QSpacerItem *verticalSpacer;
     QTableView *logTableView;
     QMenuBar *menubar;
     QMenu *menuAbout;
@@ -300,9 +301,13 @@ public:
         scrollAreaWidgetProgressBar = new QWidget();
         scrollAreaWidgetProgressBar->setObjectName(QString::fromUtf8("scrollAreaWidgetProgressBar"));
         scrollAreaWidgetProgressBar->setGeometry(QRect(0, 0, 768, 529));
-        scrollAreaWidgetProgressBar->setAutoFillBackground(false);
+        scrollAreaWidgetProgressBar->setAutoFillBackground(true);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetProgressBar);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer);
+
         scrollAreaOutputFrame->setWidget(scrollAreaWidgetProgressBar);
 
         rightVerticalLayout->addWidget(scrollAreaOutputFrame);

@@ -1,10 +1,14 @@
 #include "MainWindow.h"
+#include "Worker.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+
+    GenericWorker *worker = new Worker();
+    MainWindow w(nullptr, worker);
+
     w.setWindowTitle("Academy Project");
 
     QFile styleSheetFile("stylesheet.qss");

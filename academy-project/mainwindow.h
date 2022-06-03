@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFile>
 #include "EnumsType.h"
+#include "GenericWorker.h"
 
 class Worker;
 
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow
 
 public:
 
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, GenericWorker *worker = nullptr);
     ~MainWindow();
 
 
@@ -35,6 +36,7 @@ public:
 
 private slots:
 
+    void slotUpdateProgressBar(int perc);
     // Buttons Slot
     void on_pushButtonApply_clicked();
     void on_pushButtonAppendThread_clicked();
@@ -51,7 +53,7 @@ private slots:
 private:
 
     Ui::MainWindow *ui;
-    Worker *worker;
+    GenericWorker *worker;
 
 
     // Gestione delle Signals

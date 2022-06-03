@@ -5,16 +5,16 @@
 
 
 // =================================== MAIN WINDOW ==========================================
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, GenericWorker *genericWorker)
     : QMainWindow(parent)
     ,   ui(new Ui::MainWindow)
 {
-
+    qDebug() << "MainWindow::MainWindow Constructor -> START";
     ui->setupUi(this);
-    worker = new Worker(ui);
+    this->worker = genericWorker;
+    QObject::connect(ui->logTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested()));
 
     ui->logTableView->setContextMenuPolicy(Qt::CustomContextMenu);
-    QObject::connect(ui->logTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested()));
     ui->logTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->logTableView->setModel(worker->getModel());
 
@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
     updateApprochInfo(getApproch());
     updateTypeComboBox(getApproch());
     updateTypeInfo(getType());
+
+    qDebug() << "MainWindow::MainWindow Constructor -> STOP";
 }
 
 MainWindow::~MainWindow()
@@ -30,14 +32,24 @@ MainWindow::~MainWindow()
 }
 // ===========================================================================================
 
-void MainWindow::customMenuRequested()
+
+// ====================== GESTIONE DELLE PROGRESS BAR ==================================
+void MainWindow::slotUpdateProgressBar(int perc)
 {
-    QItemSelectionModel *select = ui->logTableView->selectionModel();
-    for(auto id : select->selectedRows())
+    //qDebug() << "MainWindow::slotUpdateProgressBar -> START";
+
+    GenericTask * task = dynamic_cast<GenericTask*>(sender());
+    QString taskProgressBarObjecUniqueName = this->worker->findValueInProgressBarThreadMap(task->getID());
+    QProgressBar* temp = ui->scrollAreaWidgetProgressBar->findChild<QProgressBar*>(taskProgressBarObjecUniqueName);
+    temp->setValue(perc);
+    if(perc == 100)
     {
-        ui->logTableView->model()->removeRow(id.row());
+        this->worker->updateItemStateOnModel(taskProgressBarObjecUniqueName, EnumsType::ThreadState::Completed);
     }
+
+    //qDebug() << "MainWindow::slotUpdateProgressBar -> STOP";
 }
+
 
 // ====================================== GESTIONE BUTTONS =======================================
 void MainWindow::on_pushButtonApply_clicked()
@@ -52,7 +64,9 @@ void MainWindow::on_pushButtonApply_clicked()
                 "MainWindow::on_pushButtonApply_clicked -> Type:       "    << EnumsType::toString(type)    << "\n"
                 "MainWindow::on_pushButtonApply_clicked -> Difficulty: "    << EnumsType::toString(diff)    << "\n";
 
-    int newTaskID = this->worker->handleMessage(approch, type, diff);
+    GenericTask* task = this->worker->handleMessage(approch, type, diff);
+    int newTaskID = task->getID();
+    QObject::connect(task, &GenericTask::updateProgressBar, this, &MainWindow::slotUpdateProgressBar);
 
     if (newTaskID == 0) {
         throw std::invalid_argument( "Worker::handleMessage didn't generate a task" );
@@ -73,15 +87,20 @@ void MainWindow::on_pushButtonAppendThread_clicked()
     EnumsType::PossibleType type = this->getType();
     EnumsType::Difficulty diff = this-> getDifficulty();
 
-    int newTaskID = this->worker->handleMessage(approch, type, diff);
+    GenericTask* task = this->worker->handleMessage(approch, type, diff);
+    int newTaskID = task->getID();
+
+    QObject::connect(task, &GenericTask::updateProgressBar, this, &MainWindow::slotUpdateProgressBar);
 
     if (newTaskID == 0) {
+        // TO-DO
+        // Bisogna gestire questa eccezione, anche se non viene mai creata
         throw std::invalid_argument( "Worker::handleMessage didn't generate a task" );
     }
     QString progressBarObjectUniqueName = addProgressBarToFrame(newTaskID);
     this->worker->addNewItemOnModel(progressBarObjectUniqueName, approch, type, diff, EnumsType::ThreadState::Started);
 
-    qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> STOP";
+    qDebug() << "MainWindow::on_pushButtonAppendThread_clicked -> STOP\n";
 }
 
 void MainWindow::on_pushButtonAppendThreadStart_clicked()
@@ -90,7 +109,7 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
 
     this->worker->sendSignalCalculate();
 
-    qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP";
+    qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP\n";
 }
 // ===============================================================================================
 
@@ -135,7 +154,6 @@ QString MainWindow::addProgressBarToFrame(int taskID)
     qDebug() << "MainWindow::addProgressBarToFrame -> STOP";
     return progressBarObjectUniqueName;
 }
-
 
 
 // ===================================== GESTIONE COMBO BOX =====================================
@@ -190,6 +208,15 @@ void MainWindow::on_actionCreators_triggered()
     msgBox.setTextFormat(Qt::RichText);
     msgBox.exec();
     qDebug() << "Worker::on_actionCreators_triggered -> STOP";
+}
+
+void MainWindow::customMenuRequested()
+{
+    QItemSelectionModel *select = ui->logTableView->selectionModel();
+    for(auto id : select->selectedRows())
+    {
+        ui->logTableView->model()->removeRow(id.row());
+    }
 }
 // ===========================================================
 

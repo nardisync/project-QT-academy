@@ -1,22 +1,15 @@
 #ifndef WORKER_H
 #define WORKER_H
 
-#include <QThread>
-#include <QObject>
-#include <QDebug>
-#include <QProgressBar>
-#include <QStandardItemModel>
-#include <QModelIndex>
-#include <QMessageBox>
-#include "MainWindow.h"
-#include "generictask.h"
+#include "GenericTask.h"
+#include "GenericWorker.h"
 
 
-class Worker : public QObject
+class Worker : public GenericWorker
 {
     Q_OBJECT
 public:
-    Worker(Ui::MainWindow* ui);
+    Worker();
     ~Worker();
 
 
@@ -40,26 +33,17 @@ public:
 
     // QMap Handlers
     void insertValueToProgressBarThreadMap(int taskID, QString progressBarObjectUniqueName);
+    QString findValueInProgressBarThreadMap(int taskID);
 
 
     // Others
-    int handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
+    GenericTask *handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty);
 
     void deleteTask();
 
 signals:
     void launchTaskCalculate();
 
-
-public slots:
-    void slotUpdateProgressBar(int perc);
-
-
-private:
-    Ui::MainWindow* ui{nullptr};
-    QStandardItemModel *model;
-    QMap<int, QString> progressBarThreadMap;
-    int progressThreadID;
 };
 
 #endif // WORKER_H

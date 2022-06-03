@@ -1,11 +1,10 @@
 #include "Worker.h"
-#include "ui_MainWindow.h"
 #include "sorting.h"
 
 // ====================== MAIN WINDOW =========================================
-Worker::Worker(Ui::MainWindow* ui)
+Worker::Worker()
 {
-    this->ui = ui;
+    qDebug() << "Worker::Worker Constructor -> START";
     progressThreadID = 1;
 
     model = new QStandardItemModel(0, 5, this);
@@ -14,6 +13,7 @@ Worker::Worker(Ui::MainWindow* ui)
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("Type"));
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("Difficulty"));
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("Status"));
+    qDebug() << "Worker::Worker Constructor -> STOP";
 }
 
 Worker::~Worker()
@@ -41,6 +41,17 @@ void Worker::sendSignalCalculate()
 void Worker::insertValueToProgressBarThreadMap(int taskID, QString progressBarObjectUniqueName)
 {
     progressBarThreadMap.insert(taskID, progressBarObjectUniqueName);
+}
+
+QString Worker::findValueInProgressBarThreadMap(int taskID)
+{
+    qDebug() << "Worker::findValueInProgressBarThreadMap -> START";
+
+    QMap<int, QString>::iterator it = progressBarThreadMap.find(taskID);
+    QString value = it.value();
+    qDebug() << "Worker::findValueInProgressBarThreadMap -> Finded Value: " << value;
+    qDebug() << "Worker::findValueInProgressBarThreadMap -> STOP";
+    return value;
 }
 // =============================================================================
 
@@ -116,29 +127,8 @@ void Worker::updateItemsAfterLaunchTask()
 // =============================================================================
 
 
-// ====================== GESTIONE DEGLI SLOT ==================================
-void Worker::slotUpdateProgressBar(int perc)
-{
-    //qDebug() << "Worker::slotUpdateProgressBar -> START";
-
-    GenericTask * task = dynamic_cast<GenericTask*>(sender());
-    QMap<int, QString>::iterator it = progressBarThreadMap.find(task->getID());
-
-    QProgressBar* temp = ui->scrollAreaWidgetProgressBar->findChild<QProgressBar*>(it.value());
-    temp->setValue(perc);
-    if(perc == 100)
-    {
-        updateItemStateOnModel(it.value(), EnumsType::ThreadState::Completed);
-    }
-
-    //qDebug() << "Worker::slotUpdateProgressBar -> STOP";
-}
-// =============================================================================
-
-
-
 // ====================== GESTIONE DEI MESSAGGI IN INPUT =======================
-int Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
+GenericTask* Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::PossibleType type, EnumsType::Difficulty difficulty)
 {
     qDebug() << "Worker::handleMessage -> START";
 
@@ -146,7 +136,6 @@ int Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possibl
                 "Worker::handleMessage -> Type:       " << EnumsType::toString(type)        <<  "\n"
                 "Worker::handleMessage -> Difficulty: " << EnumsType::toString(difficulty)  <<  "\n";
 
-    QThread     * workerThread  = new QThread();
     GenericTask * task{nullptr};
 
     if(approch == EnumsType::PossibleApproch::Sorting)
@@ -176,19 +165,21 @@ int Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possibl
 
     if(task != nullptr)
     {
+        // Creazione del Thread che gestirà la Task
+        QThread     * workerThread  = new QThread();
+
         // Gestione delle Connect e del Thread
         task->setID(progressThreadID);
         task->moveToThread(workerThread);
         QObject::connect(this, &Worker::launchTaskCalculate,    task, &GenericTask::calculate);
-        QObject::connect(task, &GenericTask::updateProgressBar, this, &Worker::slotUpdateProgressBar);
         QObject::connect(task, &GenericTask::finished,          this, &Worker::deleteTask);
         progressThreadID++;
         workerThread->start();
 
-        return task->getID();
+        return task;
     }
 
-    return 0;
+    return nullptr;
 
     qDebug() << "Worker::handleMessage -> STOP";
 }
@@ -197,15 +188,18 @@ int Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType::Possibl
 
 void Worker::deleteTask()
 {
+    qDebug() << "Worker::deleteTask -> START";
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     qInfo() << "Worker::deleteTask -> Thread " << progressBarThreadMap.find(task->getID()).value() << " completed";
 
     delete task;
+    qDebug() << "Worker::deleteTask -> STOP";
 }
 
 // ====================== GETTER ===============================================
 QStandardItemModel* Worker::getModel()
 {
+    qDebug() << "Worker::getModel -> START";
     return model;
 }
 // =============================================================================

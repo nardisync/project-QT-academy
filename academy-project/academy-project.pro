@@ -8,7 +8,9 @@ SOURCES += \
     Main.cpp \
     MainWindow.cpp \
     Worker.cpp \
-    sorting.cpp
+    Sorting.cpp \
+    NumberPresent.cpp \
+    MissingNumber.cpp
 
 HEADERS += \
     ConstStringDefinition.h \
@@ -17,7 +19,9 @@ HEADERS += \
     MainWindow.h \
     Worker.h \
     GenericTask.h \
-    sorting.h
+    Sorting.h \
+    NumberPresent.h \
+    MissingNumber.h
 
 FORMS   += \
     MainWindow.ui

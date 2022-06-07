@@ -95,12 +95,12 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>Merging Algorithm</string>
+                    <string>Check Number Algorithm</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Problem with Algorithm</string>
+                    <string>Missing Problem Algorithm</string>
                    </property>
                   </item>
                  </widget>
@@ -171,12 +171,12 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>NormalMerging</string>
+                    <string>Number is present Algorithm</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>NormalProblem</string>
+                    <string>Missing Number Algorithm</string>
                    </property>
                   </item>
                  </widget>

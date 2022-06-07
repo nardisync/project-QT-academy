@@ -355,16 +355,16 @@ public:
         actionCreators->setText(QCoreApplication::translate("MainWindow", "Creators", nullptr));
         labelApproch->setText(QCoreApplication::translate("MainWindow", "Approch :", nullptr));
         comboBoxApproch->setItemText(0, QCoreApplication::translate("MainWindow", "Sorting Algorithm", nullptr));
-        comboBoxApproch->setItemText(1, QCoreApplication::translate("MainWindow", "Merging Algorithm", nullptr));
-        comboBoxApproch->setItemText(2, QCoreApplication::translate("MainWindow", "Problem with Algorithm", nullptr));
+        comboBoxApproch->setItemText(1, QCoreApplication::translate("MainWindow", "Check Number Algorithm", nullptr));
+        comboBoxApproch->setItemText(2, QCoreApplication::translate("MainWindow", "Missing Problem Algorithm", nullptr));
 
         labelApprochInfo->setText(QString());
         labelType->setText(QCoreApplication::translate("MainWindow", "Type :", nullptr));
         comboBoxType->setItemText(0, QCoreApplication::translate("MainWindow", "BubbleSort", nullptr));
         comboBoxType->setItemText(1, QCoreApplication::translate("MainWindow", "QuickSort", nullptr));
         comboBoxType->setItemText(2, QCoreApplication::translate("MainWindow", "MergeSort", nullptr));
-        comboBoxType->setItemText(3, QCoreApplication::translate("MainWindow", "NormalMerging", nullptr));
-        comboBoxType->setItemText(4, QCoreApplication::translate("MainWindow", "NormalProblem", nullptr));
+        comboBoxType->setItemText(3, QCoreApplication::translate("MainWindow", "Number is present Algorithm", nullptr));
+        comboBoxType->setItemText(4, QCoreApplication::translate("MainWindow", "Missing Number Algorithm", nullptr));
 
         labelTypeInfo->setText(QString());
         radioButtonEasy->setText(QCoreApplication::translate("MainWindow", "Easy", nullptr));

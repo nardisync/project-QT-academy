@@ -8,7 +8,12 @@ class GenericTask : public QObject
 {
     Q_OBJECT
 public:
+    // Getter
+    inline bool get_in_exec() {return this->in_exec;};
     virtual int  getID()        = 0;
+
+    // Setter
+    inline void set_in_exec(bool exec_) {this->in_exec = exec_;};
     virtual void setID(int)     = 0;
 
     virtual void setDif(EnumsType::Difficulty d) = 0;
@@ -24,6 +29,9 @@ signals:
 
 protected:
     int id;
+
+private:
+    bool in_exec;
 };
 
 #endif // GENERICTASK_H

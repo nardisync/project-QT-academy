@@ -36,18 +36,20 @@ MainWindow::~MainWindow()
 // ====================== GESTIONE DELLE PROGRESS BAR ==================================
 void MainWindow::slotUpdateProgressBar(int perc)
 {
-    //qDebug() << "MainWindow::slotUpdateProgressBar -> START";
+    qDebug() << "MainWindow::slotUpdateProgressBar -> START";
 
     GenericTask * task = dynamic_cast<GenericTask*>(sender());
     QString taskProgressBarObjecUniqueName = this->worker->findValueInProgressBarThreadMap(task->getID());
     QProgressBar* temp = ui->scrollAreaWidgetProgressBar->findChild<QProgressBar*>(taskProgressBarObjecUniqueName);
     temp->setValue(perc);
+    qDebug() << "MainWindow::slotUpdateProgressBar -> Setting " << taskProgressBarObjecUniqueName << " to " << perc;
     if(perc == 100)
     {
+        qDebug() << "MainWindow::slotUpdateProgressBar -> Setting " << taskProgressBarObjecUniqueName << " to COMPLETED";
         this->worker->updateItemStateOnModel(taskProgressBarObjecUniqueName, EnumsType::ThreadState::Completed);
     }
 
-    //qDebug() << "MainWindow::slotUpdateProgressBar -> STOP";
+    qDebug() << "MainWindow::slotUpdateProgressBar -> STOP";
 }
 
 
@@ -168,11 +170,11 @@ void MainWindow::on_comboBoxApproch_currentTextChanged(const QString &comboAppro
     {
         approch = EnumsType::PossibleApproch::Sorting;
     }
-    else if (comboApprochCurrentText == COMBO_BOX_APPROCH_MERGING)
+    else if (comboApprochCurrentText == COMBO_BOX_APPROCH_NUMBER)
     {
-        approch = EnumsType::PossibleApproch::Merging;
+        approch = EnumsType::PossibleApproch::Present;
     }
-    else if (comboApprochCurrentText == COMBO_BOX_APPROCH_PROBLEM)
+    else if (comboApprochCurrentText == COMBO_BOX_APPROCH_MISSING)
     {
         approch = EnumsType::PossibleApproch::Problem;
     }
@@ -239,16 +241,16 @@ void MainWindow::updateTypeComboBox(EnumsType::PossibleApproch approch)
 
         updateTypeInfo(EnumsType::PossibleType::BubbleSort);
     }
-    else if (approch == EnumsType::PossibleApproch::Merging)
+    else if (approch == EnumsType::PossibleApproch::Present)
     {
-        list.append(COMBO_BOX_APPROCH_TYPE_NORMALMERGE);
+        list.append(COMBO_BOX_APPROCH_TYPE_NUMBERPRESENT);
 
-        updateTypeInfo(EnumsType::PossibleType::NormalMerging);
+        updateTypeInfo(EnumsType::PossibleType::NumberPresent);
     }
     else if (approch == EnumsType::PossibleApproch::Problem)
     {
-        list.append(COMBO_BOX_APPROCH_TYPE_NORMALPROBLEM);
-        updateTypeInfo(EnumsType::PossibleType::NormalProblem);
+        list.append(COMBO_BOX_APPROCH_TYPE_MISSINGNUMBER);
+        updateTypeInfo(EnumsType::PossibleType::MissingNumber);
     }
 
     this->ui->comboBoxType->addItems(list);
@@ -265,13 +267,13 @@ void MainWindow::updateApprochInfo(EnumsType::PossibleApproch approch)
     {
         text = COMBO_BOX_APPROCH_SORTING_INFO;
     }
-    else if (approch == EnumsType::PossibleApproch::Merging)
+    else if (approch == EnumsType::PossibleApproch::Present)
     {
-        text = COMBO_BOX_APPROCH_MERGING_INFO;
+        text = COMBO_BOX_APPROCH_NUMBER_INFO;
     }
     else if (approch == EnumsType::PossibleApproch::Problem)
     {
-        text = COMBO_BOX_APPROCH_PROBLEM_INFO;
+        text = COMBO_BOX_APPROCH_MISSING_INFO;
     }
 
     this->ui->labelApprochInfo->setText(text);
@@ -296,13 +298,13 @@ void MainWindow::updateTypeInfo(EnumsType::PossibleType type)
     {
         text = COMBO_BOX_APPROCH_TYPE_MERGESORT_INFO;
     }
-    else if (type == EnumsType::PossibleType::NormalMerging)
+    else if (type == EnumsType::PossibleType::NumberPresent)
     {
-        text = COMBO_BOX_APPROCH_TYPE_NORMALMERGE_INFO;
+        text = COMBO_BOX_APPROCH_TYPE_NUMBERPRESENT_INFO;
     }
-    else if (type == EnumsType::PossibleType::NormalProblem)
+    else if (type == EnumsType::PossibleType::MissingNumber)
     {
-        text = COMBO_BOX_APPROCH_TYPE_NORMALPROBLEM_INFO;
+        text = COMBO_BOX_APPROCH_TYPE_MISSINGNUMBER_INFO;
     }
 
     this->ui->labelTypeInfo->setText(text);
@@ -321,11 +323,11 @@ EnumsType::PossibleApproch MainWindow::getApproch()
     {
         return EnumsType::PossibleApproch::Sorting;
     }
-    else if(ui->comboBoxApproch->currentText() == COMBO_BOX_APPROCH_MERGING)
+    else if(ui->comboBoxApproch->currentText() == COMBO_BOX_APPROCH_NUMBER)
     {
-        return EnumsType::PossibleApproch::Merging;
+        return EnumsType::PossibleApproch::Present;
     }
-    else if(ui->comboBoxApproch->currentText() == COMBO_BOX_APPROCH_PROBLEM)
+    else if(ui->comboBoxApproch->currentText() == COMBO_BOX_APPROCH_MISSING)
     {
         return EnumsType::PossibleApproch::Problem;
     }
@@ -366,14 +368,14 @@ EnumsType::PossibleType MainWindow::getType()
         return EnumsType::PossibleType::MergeSort;
     }
 
-    else if(ui->comboBoxType->currentText() == COMBO_BOX_APPROCH_TYPE_NORMALMERGE)
+    else if(ui->comboBoxType->currentText() == COMBO_BOX_APPROCH_TYPE_NUMBERPRESENT)
     {
-        return EnumsType::PossibleType::NormalMerging;
+        return EnumsType::PossibleType::NumberPresent;
     }
 
-    else if(ui->comboBoxType->currentText() == COMBO_BOX_APPROCH_TYPE_NORMALPROBLEM)
+    else if(ui->comboBoxType->currentText() == COMBO_BOX_APPROCH_TYPE_MISSINGNUMBER)
     {
-        return EnumsType::PossibleType::NormalProblem;
+        return EnumsType::PossibleType::MissingNumber;
     }
 
     return EnumsType::PossibleType::None;

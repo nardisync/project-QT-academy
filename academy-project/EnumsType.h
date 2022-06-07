@@ -13,7 +13,7 @@ public:
     enum class PossibleApproch
     {
         Sorting = 0,
-        Merging = 1,
+        Present = 1,
         Problem = 2,
         None = 69
     };
@@ -30,10 +30,10 @@ public:
         MergeSort =2,
 
         //MergingType
-        NormalMerging = 3,
+        NumberPresent = 3,
 
         //ProblemType
-        NormalProblem = 6,
+        MissingNumber = 6,
 
         //Error
         None = 69
@@ -67,7 +67,7 @@ public:
         QString enumToString;
         switch(enumApproch) {
             case EnumsType::PossibleApproch::Sorting: enumToString = "Sorting"; break;
-            case EnumsType::PossibleApproch::Merging: enumToString = "Merging"; break;
+            case EnumsType::PossibleApproch::Present: enumToString = "Present"; break;
             case EnumsType::PossibleApproch::Problem: enumToString = "Problem"; break;
             case EnumsType::PossibleApproch::None: enumToString = "None"; break;
             default: printf("Invalid Enum Type"); enumToString = "Error";
@@ -86,8 +86,8 @@ public:
             case EnumsType::PossibleType::BubbleSort: enumToString = "BubbleSort Algorithm"; break;
             case EnumsType::PossibleType::QuickSort: enumToString = "QuickSort Algorithm"; break;
             case EnumsType::PossibleType::MergeSort: enumToString = "MergeSort Algorithm"; break;
-            case EnumsType::PossibleType::NormalMerging: enumToString = "NormalMerging Problem"; break;
-            case EnumsType::PossibleType::NormalProblem: enumToString = "NormalProblem problem"; break;
+            case EnumsType::PossibleType::NumberPresent: enumToString = "Number is present Algorithm"; break;
+            case EnumsType::PossibleType::MissingNumber: enumToString = "Missing Number Algorithm"; break;
             case EnumsType::PossibleType::None: enumToString = "None"; break;
             default: printf("Invalid Enum Type"); enumToString = "Error";
         }

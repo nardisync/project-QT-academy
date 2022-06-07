@@ -1,0 +1,13 @@
+release/Main.o
+release/MainWindow.o
+release/Worker.o
+release/Sorting.o
+release/NumberPresent.o
+release/MissingNumber.o
+release/moc_GenericWorker.o
+release/moc_MainWindow.o
+release/moc_Worker.o
+release/moc_GenericTask.o
+release/moc_Sorting.o
+release/moc_NumberPresent.o
+release/moc_MissingNumber.o

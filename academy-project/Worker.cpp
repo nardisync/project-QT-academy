@@ -1,5 +1,8 @@
 #include "Worker.h"
-#include "sorting.h"
+#include "Sorting.h"
+#include "MissingNumber.h"
+#include "NumberPresent.h"
+
 
 // ====================== MAIN WINDOW =========================================
 Worker::Worker()
@@ -140,26 +143,29 @@ GenericTask* Worker::handleMessage(EnumsType::PossibleApproch approch, EnumsType
 
     if(approch == EnumsType::PossibleApproch::Sorting)
     {
-        task = new sorting();
+        task = new Sorting();
         task->setType(type);
         task->setDif(difficulty);
         task->generateRandomArray();
 
     }
 
-    else if(approch == EnumsType::PossibleApproch::Merging)
+    else if(approch == EnumsType::PossibleApproch::Present)
     {
-        if(type == EnumsType::PossibleType::NormalMerging)
+        if(type == EnumsType::PossibleType::NumberPresent)
         {
-            //task = new NormalMergingTask();
+            task = new NumberPresent();
+            task->setDif(difficulty);
         }
     }
 
     else if(approch == EnumsType::PossibleApproch::Problem)
     {
-        if(type == EnumsType::PossibleType::NormalProblem)
+        if(type == EnumsType::PossibleType::MissingNumber)
         {
-            //task = new NormalProblemTask();
+            task = new MissingNumber();
+            task->setDif(difficulty);
+            task->generateRandomArray();
         }
     }
 

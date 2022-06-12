@@ -50,6 +50,8 @@ private slots:
     void on_actionCreators_triggered();
     void customMenuRequested();
 
+    void on_pushButtonClearProgressBar_clicked();
+
 private:
 
     Ui::MainWindow *ui;

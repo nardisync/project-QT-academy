@@ -113,6 +113,26 @@ void MainWindow::on_pushButtonAppendThreadStart_clicked()
 
     qDebug() << "MainWindow::on_pushButtonAppendThreadStart_clicked -> STOP\n";
 }
+
+void MainWindow::on_pushButtonClearProgressBar_clicked()
+{
+    qDebug() << "MainWindow::on_pushButtonClearProgressBar_clicked -> START" ;
+
+    QList<QString> completedTasks = this->worker->returnCompletedTaskFromModel();
+
+    for(int i = 0; i < completedTasks.length(); i++){
+        QString completedTask = "";
+        completedTask += "Frame" + completedTasks[i];
+        qDebug() << "MainWindow::on_pushButtonClearProgressBar_clicked -> Removing item: " << completedTask ;
+        delete this->ui->scrollAreaWidgetProgressBar->findChild<QFrame*>(completedTask);
+        // TO-DO
+        // Rimuovo l'oggetto, ma non la sua entry nel modello che rimarrò
+        // Non sembra un problema, ma sarebbe da pulire anche il Model oltre che il Frame
+    }
+
+
+    qDebug() << "MainWindow::on_pushButtonClearProgressBar_clicked -> STOP" ;
+}
 // ===============================================================================================
 
 
@@ -381,5 +401,3 @@ EnumsType::PossibleType MainWindow::getType()
     return EnumsType::PossibleType::None;
 }
 // ============================================================
-
-

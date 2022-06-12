@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.2.1
+** Created by: Qt User Interface Compiler version 6.2.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -68,6 +68,8 @@ public:
     QSpacerItem *horizontalSpacerInputButton;
     QPushButton *pushButtonAppendThread;
     QPushButton *pushButtonAppendThreadStart;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *pushButtonClearProgressBar;
     QLabel *labelInputInstructions;
     QFrame *commandOutputFrame;
     QVBoxLayout *rightVerticalLayout;
@@ -258,6 +260,15 @@ public:
 
         horizontalLayoutButton->addWidget(pushButtonAppendThreadStart);
 
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        horizontalLayoutButton->addItem(horizontalSpacer);
+
+        pushButtonClearProgressBar = new QPushButton(inputFrame);
+        pushButtonClearProgressBar->setObjectName(QString::fromUtf8("pushButtonClearProgressBar"));
+
+        horizontalLayoutButton->addWidget(pushButtonClearProgressBar);
+
 
         centralVerticalLayout->addLayout(horizontalLayoutButton);
 
@@ -374,6 +385,7 @@ public:
         pushButtonApply->setText(QCoreApplication::translate("MainWindow", "Start the Thread", nullptr));
         pushButtonAppendThread->setText(QCoreApplication::translate("MainWindow", "Append Thread", nullptr));
         pushButtonAppendThreadStart->setText(QCoreApplication::translate("MainWindow", "Start appended Thread", nullptr));
+        pushButtonClearProgressBar->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         labelInputInstructions->setText(QString());
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
     } // retranslateUi

@@ -127,6 +127,30 @@ void Worker::updateItemsAfterLaunchTask()
 
     qDebug() << "Worker::updateItemsAfterLaunchTask -> STOP";
 }
+
+QList<QString> Worker::returnCompletedTaskFromModel()
+{
+    qDebug() << "Worker::returnCompletedTaskFromModel -> START";
+
+    QList<QString>  completedTasks = {};
+    QModelIndex     index;
+
+    for(int row = 0; row < this->model->rowCount(); row++)
+    {
+        index = this->model->index(row, 4, QModelIndex());
+        if(index.data() == EnumsType::toString(EnumsType::ThreadState::Completed))
+        {
+            QModelIndex stringIndex;
+            stringIndex = this->model->index(row, 0, QModelIndex());
+            completedTasks.append(stringIndex.data().toString());
+        }
+    }
+    qDebug() << "Worker::returnCompletedTaskFromModel -> completedTasks result: " << completedTasks ;
+    qDebug() << "Worker::returnCompletedTaskFromModel -> STOP";
+
+    return completedTasks;
+}
+
 // =============================================================================
 
 

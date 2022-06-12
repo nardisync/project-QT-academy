@@ -26,6 +26,7 @@ public:
                            EnumsType::Difficulty threadDiff, EnumsType::ThreadState threadState);
     void updateItemsAfterLaunchTask();
     void updateItemStateOnModel(QString itemName, EnumsType::ThreadState newValue);
+    QList<QString> returnCompletedTaskFromModel();
 
 
     // Signal and Slot Handler

@@ -48,3 +48,9 @@ QFrame#progressBarFrame{
 QFrame#inputFrame{
         background-color: rgb(70, 70, 70);
 }
+
+QPushButton#tcpKeepAlivePushButton {
+	background-color: red;
+	border-radius: 16px;
+	width: 20px;
+}

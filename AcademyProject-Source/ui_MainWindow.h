@@ -70,7 +70,12 @@ public:
     QPushButton *pushButtonAppendThreadStart;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButtonClearProgressBar;
-    QLabel *labelInputInstructions;
+    QFrame *tcpFrame;
+    QVBoxLayout *verticalLayout_7;
+    QHBoxLayout *centralTCPHorizontalLayout;
+    QLabel *tcpLabel;
+    QPushButton *tcpKeepAlivePushButton;
+    QSpacerItem *horizontalSpacer_2;
     QFrame *commandOutputFrame;
     QVBoxLayout *rightVerticalLayout;
     QScrollArea *scrollAreaOutputFrame;
@@ -260,7 +265,7 @@ public:
 
         horizontalLayoutButton->addWidget(pushButtonAppendThreadStart);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayoutButton->addItem(horizontalSpacer);
 
@@ -278,19 +283,33 @@ public:
 
         verticalLayout_2->addWidget(inputFrame);
 
-        labelInputInstructions = new QLabel(commandInputFrame);
-        labelInputInstructions->setObjectName(QString::fromUtf8("labelInputInstructions"));
-        labelInputInstructions->setLayoutDirection(Qt::LeftToRight);
-        labelInputInstructions->setStyleSheet(QString::fromUtf8(""));
-        labelInputInstructions->setTextFormat(Qt::AutoText);
-        labelInputInstructions->setScaledContents(false);
-        labelInputInstructions->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
-        labelInputInstructions->setWordWrap(false);
-        labelInputInstructions->setMargin(15);
-        labelInputInstructions->setIndent(2);
-        labelInputInstructions->setOpenExternalLinks(true);
+        tcpFrame = new QFrame(commandInputFrame);
+        tcpFrame->setObjectName(QString::fromUtf8("tcpFrame"));
+        tcpFrame->setFrameShape(QFrame::StyledPanel);
+        tcpFrame->setFrameShadow(QFrame::Raised);
+        verticalLayout_7 = new QVBoxLayout(tcpFrame);
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        centralTCPHorizontalLayout = new QHBoxLayout();
+        centralTCPHorizontalLayout->setObjectName(QString::fromUtf8("centralTCPHorizontalLayout"));
+        tcpLabel = new QLabel(tcpFrame);
+        tcpLabel->setObjectName(QString::fromUtf8("tcpLabel"));
 
-        verticalLayout_2->addWidget(labelInputInstructions);
+        centralTCPHorizontalLayout->addWidget(tcpLabel);
+
+        tcpKeepAlivePushButton = new QPushButton(tcpFrame);
+        tcpKeepAlivePushButton->setObjectName(QString::fromUtf8("tcpKeepAlivePushButton"));
+
+        centralTCPHorizontalLayout->addWidget(tcpKeepAlivePushButton);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        centralTCPHorizontalLayout->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_7->addLayout(centralTCPHorizontalLayout);
+
+
+        verticalLayout_2->addWidget(tcpFrame);
 
 
         horizontalLayout_2->addWidget(commandInputFrame);
@@ -386,7 +405,8 @@ public:
         pushButtonAppendThread->setText(QCoreApplication::translate("MainWindow", "Append Thread", nullptr));
         pushButtonAppendThreadStart->setText(QCoreApplication::translate("MainWindow", "Start appended Thread", nullptr));
         pushButtonClearProgressBar->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
-        labelInputInstructions->setText(QString());
+        tcpLabel->setText(QCoreApplication::translate("MainWindow", " - TCP Connection", nullptr));
+        tcpKeepAlivePushButton->setText(QString());
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
     } // retranslateUi
 
